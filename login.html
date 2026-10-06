@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milestone - Login</title>
+    <link rel="stylesheet" href="register.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="register-card">
+            <div class="card-header">
+                <div class="logo">
+                    <i class="ph-fill ph-target"></i>
+                    <span>Milestone</span>
+                </div>
+                <h1>Welcome Back</h1>
+            </div>
+            <form id="loginForm" class="register-form" novalidate>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                    <span class="error-msg">Please enter a valid email address.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-icon-wrap">
+                        <input type="password" id="password" placeholder="Enter password" required>
+                        <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                            <i class="ph ph-eye"></i>
+                        </button>
+                    </div>
+                    <span class="error-msg">Password is required.</span>
+                </div>
+
+                <a href="#" class="reset-link">Forgot Password?</a>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Login</button>
+                </div>
+                
+                <div class="success-message hidden" id="successMessage">
+                    <i class="ph-fill ph-check-circle"></i>
+                    Logged in successfully!
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>
