@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milestone - Login</title>
+    <title>Milestones - Login</title>
     <link rel="stylesheet" href="register.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,23 +12,47 @@
     <div class="page-wrapper">
         <div class="register-card">
             <div class="card-header">
-                <div class="logo">
+                <a href="index.html" class="logo" style="text-decoration: none;">
                     <i class="ph-fill ph-target"></i>
-                    <span>Milestone</span>
-                </div>
+                    <span>Milestones</span>
+                </a>
                 <h1>Welcome Back</h1>
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.25rem;">Sign in to access your platform account</p>
             </div>
-            <form id="loginForm" class="register-form" novalidate>
+
+            <!-- Demo Credentials Quick Fill Boxes -->
+            <div style="display: flex; flex-direction: column; gap: 0.65rem; margin-top: 1.25rem;">
+                <div class="admin-hint-box" style="margin: 0;">
+                    <div class="admin-hint-text">
+                        <strong><i class="ph ph-shield-check"></i> Admin Credentials</strong>
+                        <span><code>admin@milestones.com</code> | <code>admin123</code></span>
+                    </div>
+                    <button type="button" class="btn-autofill" id="quickFillAdminBtn" title="Fill admin credentials automatically">
+                        Admin Fill
+                    </button>
+                </div>
+                <div class="admin-hint-box" style="margin: 0; border-color: rgba(139, 92, 246, 0.4); background: rgba(139, 92, 246, 0.08);">
+                    <div class="admin-hint-text">
+                        <strong style="color: #c4b5fd;"><i class="ph ph-user-circle"></i> Freelancer Credentials</strong>
+                        <span><code>freelancer@milestones.com</code> | <code>freelancer123</code></span>
+                    </div>
+                    <button type="button" class="btn-autofill" id="quickFillFreelancerBtn" style="background: #8b5cf6;" title="Fill freelancer credentials automatically">
+                        Freelancer Fill
+                    </button>
+                </div>
+            </div>
+
+            <form id="loginForm" class="register-form" novalidate style="margin-top: 1.5rem;">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
-                    <span class="error-msg">Please enter a valid email address.</span>
+                    <label for="email">Email or Username</label>
+                    <input type="text" id="email" placeholder="admin@milestones.com" required autocomplete="username">
+                    <span class="error-msg">Please enter a valid email or username.</span>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">Password</label>
                     <div class="input-icon-wrap">
-                        <input type="password" id="password" placeholder="Enter password" required>
+                        <input type="password" id="password" placeholder="Enter password" required autocomplete="current-password">
                         <button type="button" class="toggle-password" aria-label="Toggle password visibility">
                             <i class="ph ph-eye"></i>
                         </button>
@@ -36,20 +60,40 @@
                     <span class="error-msg">Password is required.</span>
                 </div>
 
-                <a href="#" class="reset-link">Forgot Password?</a>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); cursor: pointer;">
+                        <input type="checkbox" id="rememberMe" checked style="accent-color: var(--primary);">
+                        Remember me
+                    </label>
+                    <a href="#" class="reset-link" style="margin: 0;">Forgot Password?</a>
+                </div>
 
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">Cancel</button>
                     <button type="submit" class="btn btn-primary" id="submitBtn">Login</button>
                 </div>
                 
+                <!-- Success Message -->
                 <div class="success-message hidden" id="successMessage">
                     <i class="ph-fill ph-check-circle"></i>
-                    Logged in successfully!
+                    <span id="successText">Logged in successfully! Redirecting...</span>
+                </div>
+
+                <!-- Error Banner -->
+                <div class="error-banner hidden" id="errorBanner">
+                    <i class="ph ph-warning-circle"></i>
+                    <span id="errorBannerText">Invalid credentials. Please try again.</span>
+                </div>
+
+                <!-- Bottom Links -->
+                <div class="card-footer-links">
+                    <a href="index.html">&larr; Back to Home</a>
+                    <span>Don't have an account? <a href="register.html">Sign Up</a></span>
                 </div>
             </form>
         </div>
     </div>
+    <script src="db.js"></script>
     <script src="login.js"></script>
 </body>
 </html>

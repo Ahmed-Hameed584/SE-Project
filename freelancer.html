@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milestones - Freelancer Workspace</title>
+    <meta name="description" content="Milestones Freelancer Dashboard - Manage client projects, milestones, escrow payouts, and submit proposals with transparency.">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons (Weight Support) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Dark Theme Freelancer Stylesheet -->
+    <link rel="stylesheet" href="freelancer.css">
+</head>
+<body>
+
+    <!-- =========================================================================
+         1. TOP NAVIGATION BAR (Height ~80px, Dark Slate Theme)
+         ========================================================================= -->
+    <header class="top-navbar" id="topNavbar">
+        <div class="nav-left">
+            <a href="freelancer.html" class="brand-logo" id="brandLogo">
+                <div class="logo-icon-wrap">
+                    <i class="ph-fill ph-target"></i>
+                </div>
+                <span class="logo-text">Milestones</span>
+                <span class="freelancer-badge">Freelancer</span>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <!-- Global Search Box -->
+            <div class="search-box-wrapper" id="searchBoxWrapper">
+                <i class="ph ph-magnifying-glass search-icon"></i>
+                <input 
+                    type="text" 
+                    id="globalSearchInput" 
+                    class="search-input" 
+                    placeholder="Search projects..." 
+                    autocomplete="off"
+                    aria-label="Search projects"
+                >
+                <button class="search-clear-btn hidden" id="searchClearBtn" aria-label="Clear search">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <!-- Notification Center -->
+            <div class="nav-item-dropdown-wrap">
+                <button class="icon-button notification-btn" id="notificationBtn" aria-label="Notifications" aria-expanded="false" title="Notifications">
+                    <i class="ph ph-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">3</span>
+                </button>
+
+                <!-- Notifications Dropdown -->
+                <div class="notification-dropdown dropdown-panel hidden" id="notificationDropdown">
+                    <div class="dropdown-header">
+                        <div class="dropdown-title">
+                            <i class="ph-bold ph-bell-simple" style="color: var(--primary);"></i>
+                            <h4>Notifications</h4>
+                            <span class="unread-pill" id="unreadPill">3 new</span>
+                        </div>
+                        <button class="text-btn" id="markAllReadBtn">Mark all as read</button>
+                    </div>
+                    <ul class="notification-list" id="notificationList">
+                        <li class="notification-item unread">
+                            <div class="notif-icon success">
+                                <i class="ph-bold ph-money"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text"><strong>Payment Released:</strong> $1,200 escrow for Milestone 1 of <strong>App Redesign</strong> was deposited into your wallet.</p>
+                                <span class="notif-time">15 mins ago</span>
+                            </div>
+                            <span class="unread-dot"></span>
+                        </li>
+                        <li class="notification-item unread">
+                            <div class="notif-icon warning">
+                                <i class="ph-bold ph-shield-check"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text"><strong>Verification Required:</strong> Upload your ID document to enable proposal submissions for enterprise jobs.</p>
+                                <span class="notif-time">2 hours ago</span>
+                            </div>
+                            <span class="unread-dot"></span>
+                        </li>
+                        <li class="notification-item unread">
+                            <div class="notif-icon primary">
+                                <i class="ph-bold ph-chat-teardrop-text"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text"><strong>Client Message:</strong> Ali Hassan commented: <em>"Great wireframes on Milestone 2! Ready to inspect next phase."</em></p>
+                                <span class="notif-time">5 hours ago</span>
+                            </div>
+                            <span class="unread-dot"></span>
+                        </li>
+                    </ul>
+                    <div class="dropdown-footer">
+                        <button class="view-all-btn" id="viewAllNotifsBtn">Clear Notifications</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Freelancer Account Profile Dropdown -->
+            <div class="nav-item-dropdown-wrap">
+                <button class="admin-profile-btn" id="freelancerProfileBtn" aria-label="Freelancer Profile menu" aria-expanded="false">
+                    <div class="avatar-wrap">
+                        <span class="avatar-initials">AH</span>
+                        <span class="online-indicator"></span>
+                    </div>
+                    <div class="admin-details">
+                        <span class="admin-name">Ali Hassan</span>
+                        <span class="admin-role-text">Freelancer &bull; UI/UX</span>
+                    </div>
+                    <i class="ph ph-caret-down dropdown-caret"></i>
+                </button>
+
+                <!-- Profile Dropdown Menu -->
+                <div class="admin-dropdown dropdown-panel hidden" id="freelancerDropdown">
+                    <div class="profile-card-dropdown">
+                        <div class="profile-card-avatar">AH</div>
+                        <div class="profile-card-info">
+                            <div class="profile-card-name">Ali Hassan</div>
+                            <div class="profile-card-email">ali.hassan@designhub.io</div>
+                            <span class="profile-role-badge">Verified Freelancer</span>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <ul class="dropdown-nav-list">
+                        <li>
+                            <button class="dropdown-item" id="myProfileMenuBtn">
+                                <i class="ph ph-user"></i>
+                                <span>Freelancer Portfolio</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" id="paymentSettingsBtn">
+                                <i class="ph ph-wallet"></i>
+                                <span>Payout Settings &amp; Bank</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" onclick="window.location.href='admin.html'">
+                                <i class="ph ph-shield-check"></i>
+                                <span>Switch to Admin Portal</span>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item logout-item" id="navLogoutBtn">
+                        <i class="ph ph-sign-out"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         2. APP LAYOUT: SIDEBAR + MAIN CONTENT
+         ========================================================================= -->
+    <div class="app-layout">
+        
+        <!-- =====================================================================
+             LEFT SIDEBAR (Main Menu)
+             ===================================================================== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-header-row">
+                    <div class="sidebar-section-title">
+                        <span>Main Menu</span>
+                    </div>
+                    <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Hide Sidebar (Ctrl+B)" aria-label="Collapse Sidebar">
+                        <i class="ph-bold ph-caret-left"></i>
+                    </button>
+                </div>
+                
+                <nav class="sidebar-nav" aria-label="Freelancer Main Navigation">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-tab="dashboard" id="menuDashboard">
+                                <i class="ph ph-squares-four nav-icon"></i>
+                                <span class="nav-label">Dashboard</span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-tab="browse" id="menuBrowse">
+                                <i class="ph ph-compass nav-icon"></i>
+                                <span class="nav-label">Browse Projects</span>
+                                <span class="sidebar-badge pill-info" id="openProjectsCounter">6</span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-tab="payments" id="menuPayments">
+                                <i class="ph ph-credit-card nav-icon"></i>
+                                <span class="nav-label">Payments</span>
+                            </button>
+                        </li>
+                        <li class="nav-item logout-nav-item">
+                            <button class="nav-link logout-btn" id="menuLogout">
+                                <i class="ph ph-sign-out nav-icon"></i>
+                                <span class="nav-label">Logout</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Sidebar Footer Status -->
+            <div class="sidebar-footer">
+                <div class="system-status-pill" id="sidebarVerificationPill" title="Account verification status">
+                    <span class="status-indicator warning" id="verificationDot"></span>
+                    <span class="status-text" id="verificationStatusText">Pending Verification</span>
+                </div>
+                <div class="sidebar-version">v2.4 Dark</div>
+            </div>
+        </aside>
+
+        <!-- Floating Animated Expand Button (Shows when sidebar is hidden) -->
+        <button class="floating-sidebar-tab hidden" id="floatingSidebarTab" title="Show Sidebar (Ctrl+B)" aria-label="Show Sidebar">
+            <span class="floating-tab-pulse"></span>
+            <i class="ph-bold ph-caret-right floating-tab-icon"></i>
+            <span class="floating-tab-text">Show Menu</span>
+            <span class="floating-tab-badge">Ctrl+B</span>
+        </button>
+
+        <!-- =====================================================================
+             MAIN CONTENT WORKSPACE
+             ===================================================================== -->
+        <main class="main-content" id="mainContent">
+
+            <!-- -----------------------------------------------------------------
+                 TAB 1: FREELANCER DASHBOARD (WIREFRAME EXACT REPRODUCTION)
+                 ----------------------------------------------------------------- -->
+            <section class="tab-panel active" id="tab-dashboard">
+                
+                <!-- Welcome Banner -->
+                <div class="freelancer-welcome-header">
+                    <h1 class="welcome-heading">Welcome back, Freelancer!</h1>
+                    <p class="welcome-subtext">Track your projects, milestones and payments in one place.</p>
+                </div>
+
+                <!-- T5: Dashed Verification Warning Banner -->
+                <div class="verification-dashed-box" id="verificationBanner">
+                    <div class="dashed-box-content">
+                        <div class="dashed-icon-wrap">
+                            <i class="ph-bold ph-shield-warning"></i>
+                        </div>
+                        <div class="dashed-text-content">
+                            <p class="dashed-message">
+                                Your account is not verified yet. You can browse projects, but you can only send proposals after the admin verifies you.
+                            </p>
+                            <span class="dashed-hint">Fast-track verification takes less than 2 minutes.</span>
+                        </div>
+                    </div>
+                    <div class="dashed-actions">
+                        <button class="btn btn-secondary btn-sm" id="startVerificationBtn">
+                            <i class="ph ph-upload-simple"></i>
+                            <span>Submit ID Verification</span>
+                        </button>
+                        <button class="btn btn-outline-emerald btn-sm" id="toggleVerificationSimBtn" title="Toggle between verified and unverified state for demo">
+                            <i class="ph ph-sparkle"></i>
+                            <span id="simulateBtnText">Simulate Admin Approval</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- T6: My Projects Section -->
+                <div class="section-card my-projects-card">
+                    <div class="section-card-header">
+                        <div class="section-title-wrap">
+                            <h2 class="section-title">My Projects</h2>
+                            <span class="counter-pill" id="myProjectsCountBadge">3 Projects</span>
+                        </div>
+                        
+                        <div class="table-controls">
+                            <!-- Filter Pills -->
+                            <div class="filter-pills" id="projectStatusFilters">
+                                <button class="filter-pill active" data-filter="all">All</button>
+                                <button class="filter-pill" data-filter="Active">Active</button>
+                                <button class="filter-pill" data-filter="Proposed">Proposed</button>
+                                <button class="filter-pill" data-filter="Completed">Completed</button>
+                            </div>
+
+                            <!-- Search Filter -->
+                            <div class="table-search-wrap">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input 
+                                    type="text" 
+                                    id="myProjectsSearch" 
+                                    placeholder="Filter by project or client..." 
+                                    aria-label="Filter my projects"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- T6 - T8: Projects Table -->
+                    <div class="table-responsive">
+                        <table class="data-table" id="myProjectsTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 28%;">Project</th>
+                                    <th scope="col" style="width: 22%;">Client</th>
+                                    <th scope="col" style="width: 16%;">Status</th>
+                                    <th scope="col" style="width: 20%;">Milestones</th>
+                                    <th scope="col" style="width: 14%; text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myProjectsTableBody">
+                                <!-- Rendered dynamically by freelancer.js to match wireframe T7 & T8 -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- T9: Dashed Empty State Box -->
+                    <div class="empty-state-dashed-box hidden" id="emptyStateDashedBox">
+                        <div class="empty-dashed-inner">
+                            <div class="empty-dashed-icon">
+                                <i class="ph-thin ph-folder-open"></i>
+                            </div>
+                            <h3 class="empty-dashed-title">[Empty state] No projects yet?</h3>
+                            <p class="empty-dashed-text">Browse open projects from verified clients and send a proposal to start earning escrow payouts.</p>
+                            <button class="btn btn-primary" id="emptyBrowseBtn">
+                                <i class="ph-bold ph-compass"></i>
+                                <span>Browse Open Projects</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Table Footer Summary -->
+                    <div class="table-pagination-footer">
+                        <span class="pagination-info" id="projectsSummaryInfo">Showing 3 projects</span>
+                        <div class="table-quick-badges">
+                            <span class="meta-indicator"><i class="ph-fill ph-circle text-emerald"></i> 1 Active</span>
+                            <span class="meta-indicator"><i class="ph-fill ph-circle text-amber"></i> 1 Proposed</span>
+                            <span class="meta-indicator"><i class="ph-fill ph-circle text-blue"></i> 1 Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Freelancer Quick Stats Cards -->
+                <div class="stats-grid freelancer-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-label">Total Earnings</span>
+                            <div class="stat-icon-wrap emerald">
+                                <i class="ph-bold ph-wallet"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">$7,850</div>
+                        <div class="stat-subtext text-emerald">
+                            <i class="ph-bold ph-arrow-up-right"></i>
+                            <span>+$1,200 this month</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-label">In Escrow Protection</span>
+                            <div class="stat-icon-wrap blue">
+                                <i class="ph-bold ph-lock-key"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">$3,400</div>
+                        <div class="stat-subtext text-muted">Secured by Milestones</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-label">Milestones Completed</span>
+                            <div class="stat-icon-wrap purple">
+                                <i class="ph-bold ph-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">5 / 7</div>
+                        <div class="stat-subtext text-emerald">71% Completion Rate</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-header">
+                            <span class="stat-label">Available for Payout</span>
+                            <div class="stat-icon-wrap amber">
+                                <i class="ph-bold ph-bank"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">$2,150</div>
+                        <div class="stat-subtext">
+                            <button class="inline-link-btn" id="quickWithdrawBtn">Withdraw &rarr;</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 TAB 2: BROWSE PROJECTS (Interactive Marketplace for Freelancer)
+                 ----------------------------------------------------------------- -->
+            <section class="tab-panel hidden" id="tab-browse">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 class="welcome-heading">Browse Client Projects</h1>
+                        <p class="welcome-subtext">Explore verified client projects with funded escrow and submit proposals.</p>
+                    </div>
+                    <div class="header-action-group">
+                        <button class="btn btn-secondary btn-sm" id="refreshMarketplaceBtn">
+                            <i class="ph ph-arrow-clockwise"></i>
+                            <span>Refresh Listings</span>
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="clientUploadProjectBtn">
+                            <i class="ph ph-plus-circle"></i>
+                            <span>Post a Project</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search & Category Filters -->
+                <div class="marketplace-filters-bar">
+                    <div class="search-input-wrap">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" id="marketplaceSearch" placeholder="Search by skill, client, or title (e.g. Flutter, React, Figma)...">
+                    </div>
+                    <div class="category-pills" id="marketplaceCategoryPills">
+                        <button class="filter-pill active" data-category="all" data-cat="all">All Skills</button>
+                        <button class="filter-pill" data-category="UI/UX Design" data-cat="UI/UX Design">UI/UX Design</button>
+                        <button class="filter-pill" data-category="Web Development" data-cat="Web Development">Web Development</button>
+                        <button class="filter-pill" data-category="Mobile App" data-cat="Mobile App">Mobile App</button>
+                        <button class="filter-pill" data-category="Backend & Cloud" data-cat="Backend & Cloud">Backend &amp; Cloud</button>
+                        <button class="filter-pill" data-category="AI & Data Science" data-cat="AI & Data Science">AI &amp; Data</button>
+                        <button class="filter-pill" data-category="Cybersecurity" data-cat="Cybersecurity">Cybersecurity</button>
+                        <button class="filter-pill" data-category="Branding" data-cat="Branding">Branding</button>
+                    </div>
+                </div>
+
+                <!-- Projects Marketplace Grid -->
+                <div class="marketplace-grid" id="marketplaceGrid">
+                    <!-- Populated dynamically by freelancer.js -->
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 TAB 3: PAYMENTS & ESCROW LEDGER
+                 ----------------------------------------------------------------- -->
+            <section class="tab-panel hidden" id="tab-payments">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 class="welcome-heading">Payments &amp; Escrow</h1>
+                        <p class="welcome-subtext">View milestone earnings, escrow balances, and withdraw funds.</p>
+                    </div>
+                    <div class="header-action-group">
+                        <button class="btn btn-primary" id="requestPayoutBtn">
+                            <i class="ph-bold ph-hand-coins"></i>
+                            <span>Request Payout</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Balance Summary Cards -->
+                <div class="payments-overview-grid">
+                    <div class="payout-balance-card highlight-card">
+                        <div class="payout-balance-label">Available for Withdrawal</div>
+                        <div class="payout-balance-amount">$2,150.00</div>
+                        <p class="payout-balance-desc">Ready to transfer to your linked Bank Account (IBAN ending in •••• 4128).</p>
+                        <button class="btn btn-primary btn-sm" id="withdrawNowBtn">
+                            <i class="ph-bold ph-paper-plane-tilt"></i>
+                            <span>Transfer Funds</span>
+                        </button>
+                    </div>
+
+                    <div class="payout-balance-card">
+                        <div class="payout-balance-label">Funds in Active Escrow</div>
+                        <div class="payout-balance-amount text-blue">$3,400.00</div>
+                        <p class="payout-balance-desc">Secured by Milestones escrow contract. Released automatically upon milestone approval.</p>
+                        <span class="badge badge-in-progress"><i class="ph ph-shield-check"></i> 100% Escrow Protected</span>
+                    </div>
+
+                    <div class="payout-balance-card">
+                        <div class="payout-balance-label">Lifetime Platform Earnings</div>
+                        <div class="payout-balance-amount text-emerald">$7,850.00</div>
+                        <p class="payout-balance-desc">Total across 5 successfully completed milestones with zero disputes.</p>
+                        <span class="badge badge-completed"><i class="ph ph-check-circle"></i> Top Rated Freelancer</span>
+                    </div>
+                </div>
+
+                <!-- Transactions Ledger -->
+                <div class="section-card" style="margin-top: 2rem;">
+                    <div class="section-card-header">
+                        <h2 class="section-title">Milestone Payouts History</h2>
+                        <span class="counter-pill">5 Transactions</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Transaction ID</th>
+                                    <th scope="col">Project</th>
+                                    <th scope="col">Milestone</th>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="freelancerTransactionsBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- =========================================================================
+         INTERACTIVE MODALS
+         ========================================================================= -->
+
+    <!-- 1. PROJECT DETAILS / MILESTONE WORKSPACE MODAL (Opened from My Projects) -->
+    <div class="modal-backdrop hidden" id="projectModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-id-badge" id="modalProjectId">#PRJ-101</span>
+                    <h3 class="modal-title" id="modalProjectTitle">App Redesign</h3>
+                </div>
+                <button class="modal-close-btn" id="closeProjectModalBtn" aria-label="Close dialog">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Highlights Row -->
+                <div class="modal-highlight-bar">
+                    <div class="highlight-item">
+                        <span class="highlight-label">Client</span>
+                        <strong class="highlight-val" id="modalClientName">Ali Hassan</strong>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Total Contract</span>
+                        <strong class="highlight-val text-emerald" id="modalContractBudget">$4,500</strong>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Project Status</span>
+                        <span class="badge badge-in-progress" id="modalProjectStatus">Active</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Milestones Paid</span>
+                        <span class="highlight-val" id="modalPaidRatio">1 / 3 Paid</span>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="modal-section">
+                    <h4 class="modal-section-title">Project Scope &amp; Deliverables</h4>
+                    <p class="modal-text" id="modalProjectDesc">Complete UI/UX overhaul of the cross-platform application with Figma component system, interactive prototype, and design token handoff.</p>
+                </div>
+
+                <!-- Milestones Breakdown -->
+                <div class="modal-section">
+                    <div class="modal-section-header">
+                        <h4 class="modal-section-title">Milestone Roadmap &amp; Escrow Release</h4>
+                        <span class="milestone-count-pill" id="modalMilestoneCount">3 Milestones</span>
+                    </div>
+                    <div class="milestones-timeline-list" id="modalMilestonesList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalCloseActionBtn">Close</button>
+                <button class="btn btn-primary" id="modalSubmitWorkBtn">
+                    <i class="ph ph-cloud-arrow-up"></i>
+                    <span>Submit Work for Active Milestone</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. SUBMIT PROPOSAL MODAL (Opened from Marketplace) -->
+    <div class="modal-backdrop hidden" id="proposalModalBackdrop" role="dialog" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <h3 class="modal-title">Submit Project Proposal</h3>
+                    <span class="modal-sub-title" id="proposalTargetTitle">Healthcare Web Application</span>
+                </div>
+                <button class="modal-close-btn" id="closeProposalModalBtn" aria-label="Close dialog">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <form id="proposalForm">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="proposalBid">Your Total Bid Amount ($)</label>
+                            <input type="number" id="proposalBid" placeholder="e.g. 2400" required min="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="proposalTimeline">Estimated Completion</label>
+                            <select id="proposalTimeline">
+                                <option value="1-2 weeks">1 - 2 Weeks</option>
+                                <option value="2-4 weeks" selected>2 - 4 Weeks</option>
+                                <option value="1-2 months">1 - 2 Months</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="proposalCover">Cover Letter &amp; Approach</label>
+                        <textarea 
+                            id="proposalCover" 
+                            rows="4" 
+                            class="form-textarea" 
+                            placeholder="Explain why you're a good fit, your technical stack, and proposed milestone breakdown..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="escrow-reassurance-box">
+                        <i class="ph-bold ph-shield-check text-emerald"></i>
+                        <span>Client will deposit funds into escrow before you begin work. Payouts are protected.</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelProposalBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitProposalBtn">
+                        <i class="ph-bold ph-paper-plane-tilt"></i>
+                        <span>Send Proposal</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. VERIFICATION MODAL -->
+    <div class="modal-backdrop hidden" id="verificationModalBackdrop" role="dialog" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <h3 class="modal-title"><i class="ph-bold ph-shield-check text-emerald"></i> Identity Verification</h3>
+                </div>
+                <button class="modal-close-btn" id="closeVerificationModalBtn" aria-label="Close dialog">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <form id="verificationForm">
+                <div class="modal-body">
+                    <p class="modal-text" style="margin-bottom: 1.25rem;">
+                        To protect clients and prevent fraudulent bids, administrators verify every freelancer's credentials. Please provide your government ID and portfolio link.
+                    </p>
+
+                    <div class="form-group">
+                        <label for="verifyDocType">Document Type</label>
+                        <select id="verifyDocType">
+                            <option value="passport">Passport</option>
+                            <option value="national_id" selected>National Identity Card</option>
+                            <option value="drivers_license">Driver's License</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="verifyPortfolio">Portfolio URL or GitHub</label>
+                        <input type="url" id="verifyPortfolio" placeholder="https://dribbble.com/alihassan" required>
+                    </div>
+
+                    <div class="file-drop-zone">
+                        <i class="ph-light ph-file-arrow-up drop-icon"></i>
+                        <span class="drop-text">Click to upload document photo or drag &amp; drop</span>
+                        <span class="drop-hint">PNG, JPG, PDF up to 10MB</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelVerificationBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ph ph-check"></i>
+                        <span>Submit for Review</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. WITHDRAWAL MODAL -->
+    <div class="modal-backdrop hidden" id="withdrawalModalBackdrop" role="dialog" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <h3 class="modal-title">Withdraw Escrow Earnings</h3>
+                </div>
+                <button class="modal-close-btn" id="closeWithdrawalModalBtn" aria-label="Close dialog">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <form id="withdrawalForm">
+                <div class="modal-body">
+                    <div class="available-balance-banner">
+                        <span>Available Balance:</span>
+                        <strong class="text-emerald" id="withdrawModalBalance">$2,150.00</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="withdrawAmount">Withdrawal Amount ($)</label>
+                        <input type="number" id="withdrawAmount" value="2150" min="50" max="2150" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="withdrawMethod">Transfer Destination</label>
+                        <select id="withdrawMethod">
+                            <option value="bank">Direct Bank Wire (IBAN: •••• 4128) - 0% Fee</option>
+                            <option value="payoneer">Payoneer Account (ali@designhub.io)</option>
+                            <option value="usdt">USDT Crypto Escrow Wallet (TRC-20)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelWithdrawalBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ph-bold ph-paper-plane-tilt"></i>
+                        <span>Confirm Transfer</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. LOGOUT CONFIRMATION MODAL -->
+    <div class="modal-backdrop hidden" id="logoutModalBackdrop" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-body text-center" style="padding-top: 2rem;">
+                <div class="logout-icon-wrap">
+                    <i class="ph-bold ph-sign-out"></i>
+                </div>
+                <h3 class="modal-title" style="margin-bottom: 0.5rem;">Confirm Logout</h3>
+                <p class="logout-modal-text">Are you sure you want to log out of your Freelancer workspace?</p>
+            </div>
+            <div class="modal-footer justify-center">
+                <button class="btn btn-secondary" id="cancelLogoutBtn">Cancel</button>
+                <button class="btn btn-danger" id="confirmLogoutBtn">Yes, Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. FREELANCER PROFILE MODAL -->
+    <div class="modal-backdrop hidden" id="profileModalBackdrop" role="dialog" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <h3 class="modal-title"><i class="ph-bold ph-user-circle text-emerald"></i> Freelancer Profile Settings</h3>
+                    <span class="modal-sub-title">Update your portfolio, professional skills, and contact information.</span>
+                </div>
+                <button class="modal-close-btn" id="closeProfileModalBtn" aria-label="Close dialog">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <form id="profileForm">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="profileFullName">Full Name *</label>
+                            <input type="text" id="profileFullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileEmail">Email Address (Read-only)</label>
+                            <input type="email" id="profileEmail" readonly style="opacity: 0.7; cursor: not-allowed;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="profilePhone">Phone / WhatsApp</label>
+                            <input type="tel" id="profilePhone" placeholder="+1 (555) 000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label for="profileVerificationStatus">Account Verification</label>
+                            <input type="text" id="profileVerificationStatus" readonly style="opacity: 0.7; cursor: not-allowed;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileSkills">Professional Skills (comma separated)</label>
+                        <input type="text" id="profileSkills" placeholder="UI/UX Design, Figma, React, Mobile Apps">
+                    </div>
+                    <div class="form-group">
+                        <label for="profileBio">Professional Bio &amp; Summary</label>
+                        <textarea id="profileBio" rows="3" class="form-textarea" placeholder="Describe your experience and focus areas..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelProfileBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveProfileBtn">
+                        <i class="ph ph-check"></i>
+                        <span>Save Profile</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 7. POST CLIENT PROJECT MODAL (Open for Marketplace Bidding) -->
+    <div class="modal-backdrop hidden" id="clientUploadModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="clientUploadModalTitle">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <h3 class="modal-title" id="clientUploadModalTitle"><i class="ph-bold ph-plus-circle text-emerald"></i> Post a Project to Marketplace</h3>
+                    <span class="modal-sub-title">Publish client project specifications and budget. Freelancers will submit proposals.</span>
+                </div>
+                <button class="modal-close-btn" id="closeClientUploadModalBtn" aria-label="Close dialog">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <form id="clientUploadForm" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="clientUploadTitle">Project Title *</label>
+                        <input type="text" id="clientUploadTitle" placeholder="e.g. Next.js SaaS Platform & Stripe Escrow" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientUploadCategory">Category *</label>
+                            <select id="clientUploadCategory" required>
+                                <option value="UI/UX Design">UI/UX Design</option>
+                                <option value="Web Development" selected>Web Development</option>
+                                <option value="Mobile App">Mobile App</option>
+                                <option value="Backend & Cloud">Backend &amp; Cloud</option>
+                                <option value="AI & Data Science">AI &amp; Data Science</option>
+                                <option value="Cybersecurity">Cybersecurity</option>
+                                <option value="Branding">Branding</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientUploadBudget">Total Budget ($) *</label>
+                            <input type="number" id="clientUploadBudget" min="100" step="50" placeholder="e.g. 4500" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientUploadClient">Client / Organization Name *</label>
+                            <input type="text" id="clientUploadClient" placeholder="e.g. Acme Ventures" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientUploadDeadline">Estimated Deadline *</label>
+                            <input type="date" id="clientUploadDeadline" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientUploadSkills">Key Skills Required (comma separated)</label>
+                        <input type="text" id="clientUploadSkills" placeholder="React, Node.js, PostgreSQL, UI/UX">
+                    </div>
+                    <div class="form-group">
+                        <label for="clientUploadDesc">Project Scope &amp; Specifications *</label>
+                        <textarea id="clientUploadDesc" rows="4" class="form-textarea" placeholder="Detail deliverables, expectations, and milestones..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelClientUploadBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitClientUploadBtn">
+                        <i class="ph ph-check-circle"></i>
+                        <span>Publish to Marketplace</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- Milestones Unified Storage Layer -->
+    <script src="db.js"></script>
+    <!-- Controller Scripts -->
+    <script src="freelancer.js"></script>
+</body>
+</html>

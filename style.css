@@ -171,6 +171,37 @@ p {
     color: #ffffff;
 }
 
+.btn-outline-admin {
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: var(--primary-color);
+}
+
+.btn-outline-admin:hover {
+    background-color: rgba(16, 185, 129, 0.2);
+    border-color: var(--primary-color);
+    color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.admin-quicklink {
+    margin-top: 1rem;
+}
+
+.admin-quicklink a {
+    color: var(--primary-color);
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.admin-quicklink a:hover {
+    text-decoration: underline;
+    color: var(--primary-hover);
+}
+
+
 
 
 /* 1. HEADER */

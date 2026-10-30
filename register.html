@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milestone - Get Started</title>
+    <title>Milestones - Get Started</title>
     <link rel="stylesheet" href="register.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,29 +12,38 @@
     <div class="page-wrapper">
         <div class="register-card">
             <div class="card-header">
-                <div class="logo">
+                <a href="index.html" class="logo" style="text-decoration: none;">
                     <i class="ph-fill ph-target"></i>
-                    <span>Milestone</span>
-                </div>
+                    <span>Milestones</span>
+                </a>
                 <h1>Get Started</h1>
+                <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 0.25rem;">Create your client or freelancer account</p>
             </div>
             <form id="registerForm" class="register-form" novalidate>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
+                    <input type="email" id="email" placeholder="Enter your email" required autocomplete="email">
                     <span class="error-msg">Please enter a valid email address.</span>
                 </div>
                 
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Enter your full name" required>
+                    <input type="text" id="name" placeholder="Enter your full name" required autocomplete="name">
                     <span class="error-msg">Name is required.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Account Role</label>
+                    <select id="role" class="form-control" style="width: 100%; height: 42px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-color); padding: 0 0.75rem;">
+                        <option value="Freelancer" selected>Freelancer (Bid on projects &amp; earn)</option>
+                        <option value="Client">Client (Hire talent &amp; fund escrow)</option>
+                    </select>
                 </div>
                 
                 <div class="form-group">
                     <label for="password">Password</label>
                     <div class="input-icon-wrap">
-                        <input type="password" id="password" placeholder="Enter password" required>
+                        <input type="password" id="password" placeholder="Enter password (min 8 chars)" required autocomplete="new-password">
                         <button type="button" class="toggle-password" aria-label="Toggle password visibility">
                             <i class="ph ph-eye"></i>
                         </button>
@@ -45,7 +54,7 @@
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password</label>
                     <div class="input-icon-wrap">
-                        <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                        <input type="password" id="confirmPassword" placeholder="Confirm password" required autocomplete="new-password">
                         <button type="button" class="toggle-password" aria-label="Toggle password visibility">
                             <i class="ph ph-eye"></i>
                         </button>
@@ -60,11 +69,17 @@
                 
                 <div class="success-message hidden" id="successMessage">
                     <i class="ph-fill ph-check-circle"></i>
-                    Account created successfully!
+                    Account created successfully! Redirecting to login...
+                </div>
+
+                <div class="card-footer-links">
+                    <a href="index.html">&larr; Back to Home</a>
+                    <span>Already have an account? <a href="login.html">Login</a></span>
                 </div>
             </form>
         </div>
     </div>
+    <script src="db.js"></script>
     <script src="register.js"></script>
 </body>
 </html>

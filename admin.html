@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milestones - Admin Dashboard</title>
+    <meta name="description" content="Milestones platform admin dashboard for managing users, projects, escrow payments, and disputes.">
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Dark Theme Admin Stylesheet -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- =========================================================================
+         1. TOP NAVIGATION BAR (Height ~80px, Dark Slate Theme)
+         ========================================================================= -->
+    <header class="top-navbar" id="topNavbar">
+        <div class="nav-left">
+            <a href="admin.html" class="brand-logo" id="brandLogo">
+                <div class="logo-icon-wrap">
+                    <i class="ph-fill ph-target"></i>
+                </div>
+                <span class="logo-text">Milestones</span>
+                <span class="admin-badge">Admin</span>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <!-- Global Search Box -->
+            <div class="search-box-wrapper" id="searchBoxWrapper">
+                <i class="ph ph-magnifying-glass search-icon"></i>
+                <input 
+                    type="text" 
+                    id="globalSearchInput" 
+                    class="search-input" 
+                    placeholder="Search user, Project..." 
+                    autocomplete="off"
+                    aria-label="Search user or project"
+                >
+                <button class="search-clear-btn hidden" id="searchClearBtn" aria-label="Clear search">
+                    <i class="ph ph-x"></i>
+                </button>
+
+                <!-- Search Live Dropdown Results -->
+                <div class="search-results-dropdown hidden" id="searchResultsDropdown">
+                    <div class="search-results-header">
+                        <span>Search Results</span>
+                        <span class="results-count" id="resultsCount">0 found</span>
+                    </div>
+                    <div class="search-results-list" id="searchResultsList">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Bell Icon with Badge -->
+            <div class="nav-item-dropdown-wrap">
+                <button class="icon-button notification-btn" id="notificationBtn" aria-label="Notifications" aria-expanded="false">
+                    <i class="ph ph-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">3</span>
+                </button>
+
+                <!-- Notification Dropdown Menu -->
+                <div class="dropdown-menu notification-dropdown hidden" id="notificationDropdown">
+                    <div class="dropdown-header">
+                        <div class="dropdown-title">
+                            <h4>Notifications</h4>
+                            <span class="unread-pill" id="unreadPill">3 new</span>
+                        </div>
+                        <button class="text-btn" id="markAllReadBtn">Mark all read</button>
+                    </div>
+                    <ul class="notification-list" id="notificationList">
+                        <li class="notification-item unread" data-id="notif-1">
+                            <div class="notif-icon primary">
+                                <i class="ph ph-check-circle"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text"><strong>Ahmed</strong> submitted Milestone 2 for <strong>App Redesign (#101)</strong>.</p>
+                                <span class="notif-time">10 minutes ago</span>
+                            </div>
+                            <span class="unread-dot"></span>
+                        </li>
+                        <li class="notification-item unread" data-id="notif-2">
+                            <div class="notif-icon warning">
+                                <i class="ph ph-warning-circle"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text">New dispute raised on <strong>Project #105</strong> by client <strong>Zaid Al-Harbi</strong>.</p>
+                                <span class="notif-time">1 hour ago</span>
+                            </div>
+                            <span class="unread-dot"></span>
+                        </li>
+                        <li class="notification-item unread" data-id="notif-3">
+                            <div class="notif-icon success">
+                                <i class="ph ph-currency-dollar"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text">Escrow deposit of <strong>$45,000</strong> confirmed for <strong>App Redesign</strong>.</p>
+                                <span class="notif-time">3 hours ago</span>
+                            </div>
+                            <span class="unread-dot"></span>
+                        </li>
+                        <li class="notification-item" data-id="notif-4">
+                            <div class="notif-icon info">
+                                <i class="ph ph-user-plus"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text">New freelancer <strong>Kavita Patel</strong> completed identity verification.</p>
+                                <span class="notif-time">Yesterday</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="dropdown-footer">
+                        <a href="#notifications" class="view-all-link" id="viewAllNotifsBtn">Clear all notifications</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Account Profile Section -->
+            <div class="nav-item-dropdown-wrap">
+                <button class="admin-profile-btn" id="adminProfileBtn" aria-expanded="false" aria-label="Admin account menu">
+                    <div class="avatar-circle">
+                        <span>AD</span>
+                    </div>
+                    <div class="admin-details">
+                        <span class="admin-name">Administrator</span>
+                        <span class="admin-role">Super Admin</span>
+                    </div>
+                    <i class="ph ph-caret-down caret-icon"></i>
+                </button>
+
+                <!-- Admin Account Dropdown Menu -->
+                <div class="dropdown-menu profile-dropdown hidden" id="adminDropdown">
+                    <div class="profile-dropdown-header">
+                        <div class="avatar-circle large">
+                            <span>AD</span>
+                        </div>
+                        <div class="header-info">
+                            <strong>Administrator</strong>
+                            <span>admin@milestones.com</span>
+                            <span class="role-badge">Super Admin</span>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <ul class="dropdown-nav-list">
+                        <li>
+                            <button class="dropdown-item" id="profileSettingsBtn">
+                                <i class="ph ph-user"></i>
+                                <span>Admin Profile</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" id="systemSettingsBtn">
+                                <i class="ph ph-gear"></i>
+                                <span>Platform Settings</span>
+                            </button>
+                        </li>
+                        <li>
+                            <a href="freelancer.html" class="dropdown-item">
+                                <i class="ph ph-user-circle"></i>
+                                <span>Switch to Freelancer Workspace</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html" class="dropdown-item">
+                                <i class="ph ph-arrow-square-out"></i>
+                                <span>View Public Site</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item logout-item" id="navLogoutBtn">
+                        <i class="ph ph-sign-out"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- =========================================================================
+         2. MAIN DASHBOARD WRAPPER: SIDEBAR + MAIN CONTENT
+         ========================================================================= -->
+    <div class="app-layout">
+        
+        <!-- =====================================================================
+             LEFT SIDEBAR (Width ~230px, Dark Slate Theme)
+             ===================================================================== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-header-row">
+                    <div class="sidebar-section-title">
+                        <span>Main Menu</span>
+                    </div>
+                    <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Hide Sidebar (Ctrl+B)" aria-label="Collapse Sidebar">
+                        <i class="ph-bold ph-caret-left"></i>
+                    </button>
+                </div>
+                
+                <nav class="sidebar-nav" aria-label="Main Navigation">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-tab="dashboard" id="menuDashboard">
+                                <i class="ph ph-squares-four nav-icon"></i>
+                                <span class="nav-label">Dashboard</span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-tab="users" id="menuUsers">
+                                <i class="ph ph-users nav-icon"></i>
+                                <span class="nav-label">User Management</span>
+                                <span class="sidebar-badge badge-users" id="userCounter">6</span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-tab="projects" id="menuProjects">
+                                <i class="ph ph-folder-simple nav-icon"></i>
+                                <span class="nav-label">Project Management</span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-tab="payments" id="menuPayments">
+                                <i class="ph ph-credit-card nav-icon"></i>
+                                <span class="nav-label">Payments &amp; Transaction</span>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-tab="disputes" id="menuDisputes">
+                                <i class="ph ph-shield-warning nav-icon"></i>
+                                <span class="nav-label">Disputes &amp; Complaints</span>
+                                <span class="sidebar-badge" id="disputeCounter">2</span>
+                            </button>
+                        </li>
+                        <li class="nav-item logout-nav-item">
+                            <button class="nav-link logout-btn" id="menuLogout">
+                                <i class="ph ph-sign-out nav-icon"></i>
+                                <span class="nav-label">Logout</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Sidebar Footer Status -->
+            <div class="sidebar-footer">
+                <div class="system-status-pill">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">System Live</span>
+                </div>
+                <div class="sidebar-version">v2.4 Dark</div>
+            </div>
+        </aside>
+
+        <!-- Floating Animated Expand Button (Shows when sidebar is hidden) -->
+        <button class="floating-sidebar-tab hidden" id="floatingSidebarTab" title="Show Sidebar (Ctrl+B)" aria-label="Show Sidebar">
+            <span class="floating-tab-pulse"></span>
+            <i class="ph-bold ph-caret-right floating-tab-icon"></i>
+            <span class="floating-tab-text">Show Menu</span>
+            <span class="floating-tab-badge">Ctrl+B</span>
+        </button>
+
+        <!-- =====================================================================
+             MAIN DASHBOARD CONTENT
+             ===================================================================== -->
+        <main class="main-content" id="mainContent">
+
+            <!-- -----------------------------------------------------------------
+                 TAB 1: DASHBOARD OVERVIEW (DEFAULT VIEW)
+                 ----------------------------------------------------------------- -->
+            <section class="tab-panel active" id="tab-dashboard" role="tabpanel" aria-labelledby="menuDashboard">
+                
+                <!-- Main Header / Welcome Area -->
+                <div class="dashboard-header">
+                    <div class="dashboard-title-group">
+                        <h1 class="welcome-heading">Welcome back, Administrator!</h1>
+                        <p class="welcome-subtitle">Monitor platform activity and manage your projects efficiently.</p>
+                    </div>
+                    <div class="header-action-group">
+                        <button class="btn btn-secondary" id="refreshDataBtn" title="Refresh dynamic statistics">
+                            <i class="ph ph-arrows-clockwise"></i>
+                            <span>Refresh</span>
+                        </button>
+                        <button class="btn btn-primary" id="quickNewProjectBtn">
+                            <i class="ph ph-plus"></i>
+                            <span>New Project</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dashboard Statistics Cards: 3 Columns x 2 Rows Grid -->
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Cards are dynamically rendered via script -->
+                    <div class="stat-card" data-stat="total-user">
+                        <div class="stat-header">
+                            <span class="stat-title">Total User</span>
+                            <div class="stat-icon-wrap"><i class="ph ph-users-three"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value" id="statTotalUser">1230</span>
+                            <span class="stat-badge positive"><i class="ph ph-trend-up"></i> +8.2%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" data-stat="active-freelancer">
+                        <div class="stat-header">
+                            <span class="stat-title">Active Freelancer</span>
+                            <div class="stat-icon-wrap"><i class="ph ph-user-check"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value" id="statActiveFreelancer">1030</span>
+                            <span class="stat-badge positive"><i class="ph ph-trend-up"></i> +12.5%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" data-stat="total-freelancer">
+                        <div class="stat-header">
+                            <span class="stat-title">Total Freelancer</span>
+                            <div class="stat-icon-wrap"><i class="ph ph-briefcase"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value" id="statTotalFreelancer">800</span>
+                            <span class="stat-badge neutral"><i class="ph ph-minus"></i> Stable</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" data-stat="active-project">
+                        <div class="stat-header">
+                            <span class="stat-title">Active Project</span>
+                            <div class="stat-icon-wrap"><i class="ph ph-kanban"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value" id="statActiveProject">458</span>
+                            <span class="stat-badge positive"><i class="ph ph-trend-up"></i> +15.3%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card highlight" data-stat="pending-approvals">
+                        <div class="stat-header">
+                            <span class="stat-title">Pending Approvals</span>
+                            <div class="stat-icon-wrap warning"><i class="ph ph-clock-countdown"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value" id="statPendingApprovals">678</span>
+                            <span class="stat-badge action-needed"><i class="ph ph-hourglass-high"></i> Review</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card" data-stat="total-clients">
+                        <div class="stat-header">
+                            <span class="stat-title">Total Clients</span>
+                            <div class="stat-icon-wrap"><i class="ph ph-buildings"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value" id="statTotalClients">987</span>
+                            <span class="stat-badge positive"><i class="ph ph-trend-up"></i> +6.8%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Projects Section ("Recents") -->
+                <section class="recents-section" id="recentsSection">
+                    <div class="section-card">
+                        <div class="section-card-header">
+                            <div class="title-with-pill">
+                                <h2 class="section-heading">Recents</h2>
+                                <span class="badge-total" id="recentsTotalBadge">Showing 7 Projects</span>
+                            </div>
+
+                            <div class="table-controls">
+                                <!-- Filter Status Pills -->
+                                <div class="filter-pills" id="projectFilterPills">
+                                    <button class="filter-pill active" data-filter="all">All</button>
+                                    <button class="filter-pill" data-filter="In Progress">In Progress</button>
+                                    <button class="filter-pill" data-filter="Pending Approval">Pending</button>
+                                    <button class="filter-pill" data-filter="Completed">Completed</button>
+                                </div>
+
+                                <!-- Table Local Search Input -->
+                                <div class="table-search-wrap">
+                                    <i class="ph ph-magnifying-glass"></i>
+                                    <input 
+                                        type="text" 
+                                        id="recentsSearchInput" 
+                                        placeholder="Filter projects..."
+                                        aria-label="Filter recent projects"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Responsive Table Container -->
+                        <div class="table-responsive-wrapper">
+                            <table class="dashboard-table" id="recentsTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 120px;">Project ID</th>
+                                        <th scope="col" style="width: 240px;">Name</th>
+                                        <th scope="col" style="width: 260px;">Client &amp; Freelancer</th>
+                                        <th scope="col" style="width: 150px;">Budget</th>
+                                        <th scope="col" style="width: 160px;">Status</th>
+                                        <th scope="col" style="width: 110px; text-align: center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentsTableBody">
+                                    <!-- Rendered dynamically via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Table Empty State (Hidden by default) -->
+                        <div class="empty-state hidden" id="tableEmptyState">
+                            <i class="ph ph-folder-dashed"></i>
+                            <h3>No projects found</h3>
+                            <p>Try adjusting your search query or filter criteria.</p>
+                            <button class="btn btn-secondary btn-sm" id="resetFilterBtn">Reset Filters</button>
+                        </div>
+
+                        <!-- Table Footer / Pagination -->
+                        <div class="table-pagination-footer">
+                            <span class="pagination-info" id="paginationInfo">Showing 1 to 7 of 7 projects</span>
+                            <div class="pagination-controls">
+                                <button class="page-btn" id="prevPageBtn" disabled><i class="ph ph-caret-left"></i> Previous</button>
+                                <button class="page-btn active">1</button>
+                                <button class="page-btn" id="nextPageBtn" disabled>Next <i class="ph ph-caret-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 TAB 2: USER MANAGEMENT VIEW
+                 ----------------------------------------------------------------- -->
+            <section class="tab-panel hidden" id="tab-users" role="tabpanel" aria-labelledby="menuUsers">
+                <div class="dashboard-header">
+                    <div class="dashboard-title-group">
+                        <h1 class="welcome-heading">User Management</h1>
+                        <p class="welcome-subtitle">Inspect registered clients and freelancers, verify profiles, and manage access.</p>
+                    </div>
+                    <div class="header-action-group">
+                        <button class="btn btn-primary" id="addNewUserBtn">
+                            <i class="ph ph-user-plus"></i>
+                            <span>Add New User</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- User Management Summary Cards -->
+                <div class="user-stats-bar">
+                    <div class="mini-stat">
+                        <span class="mini-label">Total Users</span>
+                        <strong class="mini-val" id="miniTotalUsers">1,230</strong>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-label">Verified Freelancers</span>
+                        <strong class="mini-val text-emerald" id="miniFreelancers">800</strong>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-label">Active Clients</span>
+                        <strong class="mini-val text-blue" id="miniClients">987</strong>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-label">Suspended / Flagged</span>
+                        <strong class="mini-val text-red" id="miniSuspended">0</strong>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <div class="title-with-pill">
+                            <h2 class="section-heading">Platform Users</h2>
+                            <span class="counter-badge" id="totalUsersCountBadge">6 Accounts</span>
+                        </div>
+                        <div class="table-controls">
+                            <div class="filter-pills" id="userRoleFilter">
+                                <button class="filter-pill active" data-role="all">All</button>
+                                <button class="filter-pill" data-role="Client">Clients</button>
+                                <button class="filter-pill" data-role="Freelancer">Freelancers</button>
+                            </div>
+                            <div class="table-search-wrap">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" id="userSearchInput" placeholder="Search by name, email...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-wrapper">
+                        <table class="dashboard-table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">User ID</th>
+                                    <th scope="col">Name &amp; Email</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Projects</th>
+                                    <th scope="col">Joined Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 TAB 3: PROJECT MANAGEMENT VIEW
+                 ----------------------------------------------------------------- -->
+            <section class="tab-panel hidden" id="tab-projects" role="tabpanel" aria-labelledby="menuProjects">
+                <div class="dashboard-header">
+                    <div class="dashboard-title-group">
+                        <h1 class="welcome-heading">Project Management</h1>
+                        <p class="welcome-subtitle">Track deliverables, approve milestone completions, and supervise timelines.</p>
+                    </div>
+                    <div class="header-action-group">
+                        <button class="btn btn-secondary" id="exportProjectsBtn">
+                            <i class="ph ph-download-simple"></i>
+                            <span>Export CSV</span>
+                        </button>
+                        <button class="btn btn-primary" id="createProjectFromTabBtn">
+                            <i class="ph ph-plus"></i>
+                            <span>Create Project</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <div class="title-with-pill">
+                            <h2 class="section-heading">All Platform Projects</h2>
+                        </div>
+                        <div class="table-controls">
+                            <div class="filter-pills" id="allProjectsFilter">
+                                <button class="filter-pill active" data-filter="all">All</button>
+                                <button class="filter-pill" data-filter="In Progress">In Progress</button>
+                                <button class="filter-pill" data-filter="Pending Approval">Pending</button>
+                                <button class="filter-pill" data-filter="Completed">Completed</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-wrapper">
+                        <table class="dashboard-table" id="allProjectsTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Project ID</th>
+                                    <th scope="col">Project Title</th>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Freelancer</th>
+                                    <th scope="col">Milestone Progress</th>
+                                    <th scope="col">Budget</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allProjectsTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Incoming Freelancer Proposals Section (Synchronized from Freelancer Dashboard) -->
+                <div class="section-card" id="adminProposalsCard" style="margin-top: 2rem;">
+                    <div class="section-card-header">
+                        <div class="title-with-pill">
+                            <h2 class="section-heading">Freelancer Project Proposals</h2>
+                            <span class="counter-badge" id="proposalsCountBadge">1 Pending Review</span>
+                        </div>
+                    </div>
+                    <div class="table-responsive-wrapper">
+                        <table class="dashboard-table" id="adminProposalsTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Proposal ID</th>
+                                    <th scope="col">Project</th>
+                                    <th scope="col">Freelancer</th>
+                                    <th scope="col">Bid Amount</th>
+                                    <th scope="col">Timeline</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" style="text-align: center;">Decision Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminProposalsTableBody">
+                                <!-- Populated dynamically from MilestonesDB -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 TAB 4: PAYMENTS & TRANSACTION VIEW
+                 ----------------------------------------------------------------- -->
+            <section class="tab-panel hidden" id="tab-payments" role="tabpanel" aria-labelledby="menuPayments">
+                <div class="dashboard-header">
+                    <div class="dashboard-title-group">
+                        <h1 class="welcome-heading">Payments &amp; Transactions</h1>
+                        <p class="welcome-subtitle">Supervise secure escrow reserves, automated disbursements, and fee revenues.</p>
+                    </div>
+                    <div class="header-action-group">
+                        <button class="btn btn-secondary" id="exportTransactionsBtn">
+                            <i class="ph ph-file-text"></i>
+                            <span>Financial Report</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid payments-stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Total Escrow Reserve</span>
+                            <div class="stat-icon-wrap"><i class="ph ph-shield-check"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value">$185,400</span>
+                            <span class="stat-badge positive">Funded</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Released This Month</span>
+                            <div class="stat-icon-wrap"><i class="ph ph-arrow-up-right"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value">$94,250</span>
+                            <span class="stat-badge positive">+18%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Platform Fee Revenue</span>
+                            <div class="stat-icon-wrap"><i class="ph ph-receipt"></i></div>
+                        </div>
+                        <div class="stat-value-wrap">
+                            <span class="stat-value">$14,820</span>
+                            <span class="stat-badge positive">5% avg fee</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <div class="title-with-pill">
+                            <h2 class="section-heading">Transaction Ledger</h2>
+                        </div>
+                    </div>
+                    <div class="table-responsive-wrapper">
+                        <table class="dashboard-table" id="transactionsTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Txn ID</th>
+                                    <th scope="col">Project</th>
+                                    <th scope="col">Party</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col" style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionsTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 TAB 5: DISPUTES & COMPLAINTS VIEW
+                 ----------------------------------------------------------------- -->
+            <section class="tab-panel hidden" id="tab-disputes" role="tabpanel" aria-labelledby="menuDisputes">
+                <div class="dashboard-header">
+                    <div class="dashboard-title-group">
+                        <h1 class="welcome-heading">Disputes &amp; Complaints</h1>
+                        <p class="welcome-subtitle">Impartial arbitration for milestone scope conflicts and fund release complaints.</p>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-card-header">
+                        <div class="title-with-pill">
+                            <h2 class="section-heading">Open Dispute Cases</h2>
+                            <span class="badge-total warning">2 Active Cases</span>
+                        </div>
+                    </div>
+                    <div class="disputes-list" id="disputesContainer">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- =========================================================================
+         3. MODALS (Accessible Dialogs in Dark Theme)
+         ========================================================================= -->
+
+    <!-- Modal 1: Project Details Modal -->
+    <div class="modal-backdrop hidden" id="projectModalBackdrop">
+        <div class="modal-card" id="projectModalCard" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <span class="project-id-badge" id="modalProjectId">#101</span>
+                    <h2 id="modalProjectTitle">App Redesign</h2>
+                </div>
+                <button class="modal-close-btn" id="closeProjectModalBtn" aria-label="Close modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Status & Budget Bar -->
+                <div class="modal-highlight-bar">
+                    <div class="highlight-item">
+                        <span class="highlight-label">Status</span>
+                        <div id="modalStatusBadge">
+                            <span class="badge badge-in-progress">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Total Budget</span>
+                        <strong class="highlight-val" id="modalBudget">$45,000</strong>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Escrow Funded</span>
+                        <strong class="highlight-val text-emerald" id="modalEscrow">$45,000 (100%)</strong>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Deadline</span>
+                        <span class="highlight-val" id="modalDeadline">Dec 15, 2026</span>
+                    </div>
+                </div>
+
+                <!-- Two Column Parties Info -->
+                <div class="modal-parties-grid">
+                    <div class="party-card">
+                        <div class="party-badge client-badge">Client</div>
+                        <div class="party-info">
+                            <div class="party-avatar client-avatar" id="modalClientInitials">AH</div>
+                            <div>
+                                <h4 id="modalClientName">Ali Hassan</h4>
+                                <span class="party-role" id="modalClientCompany">FinTech Venture Labs</span>
+                                <span class="party-email" id="modalClientEmail">ali.hassan@fintechlabs.io</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="party-card">
+                        <div class="party-badge freelancer-badge">Freelancer</div>
+                        <div class="party-info">
+                            <div class="party-avatar freelancer-avatar" id="modalFreelancerInitials">AH</div>
+                            <div>
+                                <h4 id="modalFreelancerName">Ahmed</h4>
+                                <span class="party-role" id="modalFreelancerTitle">Senior Mobile &amp; UI Architect</span>
+                                <span class="party-email" id="modalFreelancerEmail">ahmed.dev@freelance.org</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="modal-section">
+                    <h3 class="modal-section-title">Project Overview</h3>
+                    <p class="modal-text" id="modalDescription">
+                        Complete redesign and responsive engineering of the iOS &amp; Android native mobile applications. Scope includes modern UX system, design tokens, responsive prototype, and clean component architecture.
+                    </p>
+                </div>
+
+                <!-- Milestones Breakdown -->
+                <div class="modal-section">
+                    <div class="milestones-header">
+                        <h3 class="modal-section-title">Contract Milestones</h3>
+                        <span class="milestone-counter" id="modalMilestoneCount">3 Milestones</span>
+                    </div>
+                    <div class="milestones-list" id="modalMilestonesList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="modalDeleteProjectBtn" style="margin-right: auto;">
+                    <i class="ph ph-trash"></i>
+                    <span>Delete Project</span>
+                </button>
+                <button class="btn btn-secondary" id="modalCloseActionBtn">Close</button>
+                <button class="btn btn-primary" id="modalApproveMilestoneBtn">
+                    <i class="ph ph-check"></i>
+                    <span>Approve Current Milestone</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Add New User Modal -->
+    <div class="modal-backdrop hidden" id="userModalBackdrop">
+        <div class="modal-card small" role="dialog" aria-modal="true" aria-labelledby="addUserModalTitle">
+            <div class="modal-header">
+                <h2 id="addUserModalTitle">Add New Platform User</h2>
+                <button class="modal-close-btn" id="closeUserModalBtn" aria-label="Close modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <form id="addUserForm" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newUserName">Full Name</label>
+                        <input type="text" id="newUserName" placeholder="e.g. Sarah Jenkins" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newUserEmail">Email Address</label>
+                        <input type="email" id="newUserEmail" placeholder="e.g. s.jenkins@example.com" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newUserRole">User Role</label>
+                            <select id="newUserRole" required>
+                                <option value="Freelancer">Freelancer</option>
+                                <option value="Client">Client</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="newUserStatus">Account Status</label>
+                            <select id="newUserStatus">
+                                <option value="Active">Active</option>
+                                <option value="Pending">Pending Verification</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newUserPassword">Initial Password (Optional)</label>
+                        <input type="text" id="newUserPassword" placeholder="Defaults to password123">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelAddUserBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 3: Dispute Details / Arbitration Modal -->
+    <div class="modal-backdrop hidden" id="disputeModalBackdrop">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="disputeModalTitle">
+            <div class="modal-header">
+                <div class="modal-header-title">
+                    <span class="project-id-badge warning" id="disputeCaseId">#DSP-401</span>
+                    <h2 id="disputeModalTitle">Arbitration Review</h2>
+                </div>
+                <button class="modal-close-btn" id="closeDisputeModalBtn" aria-label="Close modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="disputeModalBody">
+                <!-- Injected via JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelDisputeActionBtn">Close</button>
+                <button class="btn btn-secondary" id="refundClientBtn">Refund Client</button>
+                <button class="btn btn-primary" id="releaseFreelancerBtn">Release to Freelancer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Logout Confirmation Dialog -->
+    <div class="modal-backdrop hidden" id="logoutModalBackdrop">
+        <div class="modal-card tiny text-center" role="alertdialog" aria-modal="true" aria-labelledby="logoutModalTitle">
+            <div class="logout-icon-wrap">
+                <i class="ph ph-sign-out"></i>
+            </div>
+            <h2 id="logoutModalTitle">Confirm Logout</h2>
+            <p class="logout-modal-text">Are you sure you want to end your administrator session? You will be redirected to the login page.</p>
+            <div class="modal-footer justify-center">
+                <button class="btn btn-secondary" id="cancelLogoutBtn">Cancel</button>
+                <button class="btn btn-danger" id="confirmLogoutBtn">Yes, Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: Create New Project Modal -->
+    <div class="modal-backdrop hidden" id="createProjectModalBackdrop">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="createProjectModalTitle">
+            <div class="modal-header">
+                <h2 id="createProjectModalTitle">Create Platform Project</h2>
+                <button class="modal-close-btn" id="closeCreateProjectModalBtn" aria-label="Close modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <form id="createProjectForm" novalidate>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newProjectTitle">Project Title *</label>
+                        <input type="text" id="newProjectTitle" placeholder="e.g. AI Financial Analytics Dashboard" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newProjectCategory">Category *</label>
+                            <select id="newProjectCategory" required>
+                                <option value="Mobile App">Mobile App</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="UI/UX Design">UI/UX Design</option>
+                                <option value="Backend & Cloud">Backend &amp; Cloud</option>
+                                <option value="Cybersecurity">Cybersecurity</option>
+                                <option value="AI & Data Science">AI &amp; Data Science</option>
+                                <option value="Branding">Branding</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="newProjectBudget">Total Budget ($) *</label>
+                            <input type="number" id="newProjectBudget" min="50" step="50" placeholder="e.g. 5000" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newProjectClient">Client Name / Org *</label>
+                            <input type="text" id="newProjectClient" placeholder="e.g. Apex Fintech Ltd" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newProjectDeadline">Deadline Date *</label>
+                            <input type="date" id="newProjectDeadline" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newProjectFreelancer">Assign Freelancer (Optional - or leave open for Marketplace)</label>
+                        <select id="newProjectFreelancer">
+                            <option value="">-- Open for Freelancer Bidding in Marketplace --</option>
+                        </select>
+                        <small style="color:var(--text-muted); font-size:0.8rem; display:block; margin-top:0.35rem;"><i class="ph ph-info"></i> Leaving this unassigned immediately publishes the project to Browse Projects so freelancers can submit proposals.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="newProjectDescription">Project Scope &amp; Specifications *</label>
+                        <textarea id="newProjectDescription" rows="3" style="width:100%; border:1px solid var(--border-light); border-radius:var(--radius-md); padding:0.75rem; background:var(--bg-subtle); color:var(--text-primary); resize:vertical;" placeholder="Describe deliverables, requirements, and milestones..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelCreateProjectBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitCreateProjectBtn">
+                        <i class="ph ph-check-circle"></i>
+                        <span>Publish Project</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 6: Edit / Manage User Modal -->
+    <div class="modal-backdrop hidden" id="editUserModalBackdrop">
+        <div class="modal-card small" role="dialog" aria-modal="true" aria-labelledby="editUserModalTitle">
+            <div class="modal-header">
+                <h2 id="editUserModalTitle">Edit User Account</h2>
+                <button class="modal-close-btn" id="closeEditUserModalBtn" aria-label="Close modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <form id="editUserForm" novalidate>
+                <input type="hidden" id="editUserId">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editUserName">Full Name *</label>
+                        <input type="text" id="editUserName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserEmail">Email Address *</label>
+                        <input type="email" id="editUserEmail" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editUserRole">Role</label>
+                            <select id="editUserRole">
+                                <option value="Freelancer">Freelancer</option>
+                                <option value="Client">Client</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editUserStatus">Account Status</label>
+                            <select id="editUserStatus">
+                                <option value="Active">Active</option>
+                                <option value="Pending">Pending Verification</option>
+                                <option value="Suspended">Suspended</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="editVerificationGroup">
+                        <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                            <input type="checkbox" id="editUserVerified" style="width:16px; height:16px;">
+                            <span>Freelancer Identity Verified (allows submitting proposals)</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="deleteUserFromEditBtn" style="margin-right:auto;">
+                        <i class="ph ph-trash"></i> Delete
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="cancelEditUserBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- Milestones Unified Storage Layer -->
+    <script src="db.js"></script>
+    <!-- Admin Controller Script -->
+    <script src="admin.js"></script>
+</body>
+</html>

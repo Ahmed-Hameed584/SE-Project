@@ -3,34 +3,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const navActions = document.querySelector('.nav-actions');
-    const menuIcon = mobileMenuToggle.querySelector('i');
 
-    mobileMenuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        navActions.classList.toggle('active');
-        
-        // Toggle icon between list and x
-        if (navLinks.classList.contains('active')) {
-            menuIcon.classList.remove('ph-list');
-            menuIcon.classList.add('ph-x');
-        } else {
-            menuIcon.classList.remove('ph-x');
-            menuIcon.classList.add('ph-list');
-        }
-    });
+    if (mobileMenuToggle && navLinks && navActions) {
+        const menuIcon = mobileMenuToggle.querySelector('i');
 
-    // Close mobile menu when clicking a link
-    const mobileLinks = document.querySelectorAll('.nav-links a, .nav-actions a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                navLinks.classList.remove('active');
-                navActions.classList.remove('active');
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            navActions.classList.toggle('active');
+            
+            // Toggle icon between list and x
+            if (navLinks.classList.contains('active')) {
+                menuIcon.classList.remove('ph-list');
+                menuIcon.classList.add('ph-x');
+            } else {
                 menuIcon.classList.remove('ph-x');
                 menuIcon.classList.add('ph-list');
             }
         });
-    });
+
+        // Close mobile menu when clicking a link
+        const mobileLinks = document.querySelectorAll('.nav-links a, .nav-actions a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    navActions.classList.remove('active');
+                    menuIcon.classList.remove('ph-x');
+                    menuIcon.classList.add('ph-list');
+                }
+            });
+        });
+    }
 
     // 2. Intersection Observer for scroll animations
     const observerOptions = {
@@ -39,12 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
         threshold: 0.15
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
+    const observer = new IntersectionObserver((entries, observerInstance) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Optional: Stop observing once visible if you only want it to animate once
-                // observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
-            if(targetId === '#') return;
+            if (targetId === '#') return;
             
             const targetElement = document.querySelector(targetId);
             if (targetElement) {

@@ -76,13 +76,39 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = true;
             submitBtn.textContent = 'Creating...';
             
-            // Simulate API Call
+            const roleSelect = document.getElementById('role');
+            const selectedRole = roleSelect ? roleSelect.value : 'Freelancer';
+
+            if (window.MilestonesDB) {
+                const existing = window.MilestonesDB.getUserByEmail(emailInput.value.trim());
+                if (existing) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Create Account';
+                    emailInput.closest('.form-group').classList.add('error');
+                    const errSpan = emailInput.closest('.form-group').querySelector('.error-msg');
+                    if (errSpan) errSpan.textContent = 'An account with this email already exists.';
+                    return;
+                }
+
+                window.MilestonesDB.createUser({
+                    name: nameInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    password: passwordInput.value,
+                    role: selectedRole,
+                    status: 'Active',
+                    verified: true
+                });
+            }
+
             setTimeout(() => {
                 successMessage.classList.remove('hidden');
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Create Account';
+                submitBtn.textContent = 'Account Created!';
                 form.reset();
-            }, 1500);
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            }, 500);
         }
     });
 

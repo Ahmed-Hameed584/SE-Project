@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milestone - Manage Projects & Payments</title>
+    <title>Milestones - Manage Projects & Payments</title>
     <meta name="description" content="A transparent workspace to manage projects, track milestones, and approve payments with confidence.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,10 +15,10 @@
     <!-- 1. TOP NAVIGATION / HEADER -->
     <header class="header">
         <div class="container header-inner">
-            <div class="logo">
+            <a href="index.html" class="logo">
                 <i class="ph-fill ph-target"></i>
-                <span>Milestone</span>
-            </div>
+                <span>Milestones</span>
+            </a>
             
             <button class="mobile-menu-toggle" aria-label="Toggle Menu">
                 <i class="ph ph-list"></i>
@@ -28,9 +28,13 @@
                 <a href="#home">Home</a>
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
+                <a href="freelancer.html?tab=browse">Browse Projects</a>
             </nav>
 
             <div class="nav-actions">
+                <a href="freelancer.html?tab=browse&action=post-project" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <i class="ph-bold ph-plus-circle"></i> Post a Project
+                </a>
                 <a href="login.html" class="btn btn-secondary">Login</a>
                 <a href="register.html" class="btn btn-primary">Get Started</a>
             </div>
@@ -43,10 +47,21 @@
             <h1>Where Great Work Meets<br>Clear Expectations.</h1>
             <p>A transparent workspace to manage projects, track milestones, and approve payments with confidence.</p>
             <div class="hero-ctas">
-                <a href="register.html" class="btn btn-primary btn-large">Get Started</a>
-                <a href="#how-it-works" class="btn btn-secondary btn-large">
-                    <i class="ph ph-play-circle"></i>
-                    See How It Works
+                <a href="freelancer.html?tab=browse&action=post-project" class="btn btn-primary btn-large" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);">
+                    <i class="ph-bold ph-plus-circle"></i>
+                    Post a Project
+                </a>
+                <a href="freelancer.html?tab=browse" class="btn btn-secondary btn-large" style="border-color: rgba(16, 185, 129, 0.4); color: #34d399;">
+                    <i class="ph ph-magnifying-glass"></i>
+                    Browse Projects
+                </a>
+                <a href="freelancer.html" class="btn btn-outline-admin btn-large" style="border-color: rgba(139, 92, 246, 0.4); color: #c4b5fd;">
+                    <i class="ph ph-user-circle"></i>
+                    Freelancer Hub
+                </a>
+                <a href="login.html" class="btn btn-outline-admin btn-large">
+                    <i class="ph ph-shield-check"></i>
+                    Admin Portal
                 </a>
             </div>
         </div>
@@ -103,7 +118,7 @@
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="ph ph-chat-circle-text"></i></div>
-                    <h3>Client Approval & Feedback</h3>
+                    <h3>Client Approval &amp; Feedback</h3>
                     <p>Streamline the review process. Clients can approve milestones or request specific revisions directly on the deliverable.</p>
                 </div>
             </div>
@@ -140,7 +155,7 @@
                 <div class="timeline-step">
                     <div class="step-node">03</div>
                     <div class="step-content">
-                        <h3>Submit & Review</h3>
+                        <h3>Submit &amp; Review</h3>
                         <p>The freelancer submits completed work for a milestone. The client reviews and provides direct feedback.</p>
                     </div>
                 </div>
@@ -148,7 +163,7 @@
                 <div class="timeline-step">
                     <div class="step-node">04</div>
                     <div class="step-content">
-                        <h3>Approve & Track</h3>
+                        <h3>Approve &amp; Track</h3>
                         <p>Upon approval, the milestone is marked complete, and the simulated payment status is updated to released.</p>
                     </div>
                 </div>
@@ -163,7 +178,7 @@
             <p>Bring your clients, milestones, deliverables, and payments into one transparent workspace.</p>
             <div class="cta-actions">
                 <a href="register.html" class="btn btn-primary btn-large">Get Started</a>
-                <a href="#features" class="btn btn-secondary btn-large cta-outline">Explore Features</a>
+                <a href="login.html" class="btn btn-secondary btn-large cta-outline">Login to Platform</a>
             </div>
         </div>
     </section>
@@ -174,9 +189,13 @@
             <div class="footer-left">
                 <div class="logo">
                     <i class="ph-fill ph-target"></i>
-                    <span>Milestone</span>
+                    <span>Milestones</span>
                 </div>
-                <p class="copyright">&copy; 2026 Milestone Inc. All rights reserved.</p>
+                <p class="copyright">&copy; 2026 Milestones Inc. All rights reserved.</p>
+                <div class="admin-quicklink" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="freelancer.html"><i class="ph ph-user-circle"></i> Freelancer Portal</a>
+                    <a href="login.html"><i class="ph ph-shield-check"></i> Administrator Access</a>
+                </div>
             </div>
             
             <div class="footer-nav">
@@ -190,7 +209,7 @@
                 <div class="footer-col">
                     <h4>Solutions</h4>
                     <a href="#">For Clients</a>
-                    <a href="#">For Freelancers</a>
+                    <a href="freelancer.html">For Freelancers</a>
                     <a href="#">Agencies</a>
                     <a href="#">Enterprise</a>
                 </div>
