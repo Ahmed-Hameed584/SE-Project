@@ -1414,9 +1414,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.MilestonesDB.clearCurrentUser();
             }
             sessionStorage.removeItem('milestones_user');
-            showToast("Administrator session terminated. Redirecting to login...", "info");
+            showToast("Administrator session terminated. Returning to home page...", "info");
             setTimeout(() => {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }, 600);
         });
     }

@@ -306,17 +306,30 @@ with open(os.path.join(WORKSPACE, "admin.js"), "r", encoding="utf-8") as f:
 ts.check("window.addEventListener('storage'" in adminJs, "admin.js", "Admin listens for storage events for real-time synchronization")
 ts.check('createProjectForm' in adminJs, "admin.js", "Admin create project form handler persists projects")
 
-# Check index.html
+# Check index.html clean state (no freelancer hub or admin portal buttons)
 with open(os.path.join(WORKSPACE, "index.html"), "r", encoding="utf-8") as f:
     indexHtml = f.read()
 
-ts.check('Browse Projects' in indexHtml, "index.html", "Browse Projects navigation link present on landing page")
-ts.check('Post a Project' in indexHtml, "index.html", "Post a Project button present on landing page")
-ts.check('freelancer.html?tab=browse' in indexHtml, "index.html", "Links directly to Browse Projects tab")
+ts.check('Browse Projects' not in indexHtml.split('<header')[1].split('</header>')[0], "index.html", "Browse Projects navigation link removed from top bar")
+ts.check('Post a Project' not in indexHtml.split('<header')[1].split('</header>')[0], "index.html", "Post a Project button removed from top bar")
+ts.check('Freelancer Hub' not in indexHtml, "index.html", "Freelancer Hub button removed from index.html")
+ts.check('Admin Portal' not in indexHtml, "index.html", "Admin Portal button removed from index.html")
+ts.check('Administrator Access' not in indexHtml, "index.html", "Administrator Access link removed from index.html")
+ts.check('hero-btn-pill-primary' in indexHtml, "index.html", "Modern primary pill button used in hero")
+ts.check('hero-btn-pill-secondary' in indexHtml, "index.html", "Modern glass secondary pill button used in hero")
 
-# Check db.js
+# Check logout redirection to index.html
+with open(os.path.join(WORKSPACE, "admin.js"), "r", encoding="utf-8") as f:
+    adminJs = f.read()
+ts.check("window.location.href = 'index.html'" in adminJs, "admin.js", "Admin logout redirects to index.html")
+
+with open(os.path.join(WORKSPACE, "freelancer.js"), "r", encoding="utf-8") as f:
+    freelancerJs = f.read()
+ts.check("window.location.href = 'index.html'" in freelancerJs, "freelancer.js", "Freelancer logout redirects to index.html")
+
 with open(os.path.join(WORKSPACE, "db.js"), "r", encoding="utf-8") as f:
     dbJs = f.read()
+ts.check("window.location.href = 'index.html'" in dbJs, "db.js", "MilestonesDB.logout redirects to index.html")
 
 ts.check('getMarketplaceProjects' in dbJs, "db.js", "getMarketplaceProjects method exists")
 ts.check('open marketplace' in dbJs, "db.js", "Case-insensitive marketplace status checking implemented")

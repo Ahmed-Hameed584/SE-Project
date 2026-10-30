@@ -1179,9 +1179,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.MilestonesDB.clearCurrentUser();
             }
             sessionStorage.removeItem('milestones_user');
-            showToast("Freelancer workspace session closed. Redirecting...", "info");
+            showToast("Freelancer workspace session closed. Returning to home page...", "info");
             setTimeout(() => {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }, 600);
         });
     }
