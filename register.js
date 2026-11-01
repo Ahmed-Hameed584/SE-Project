@@ -115,7 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Real-time validation clear on input
     [emailInput, nameInput, passwordInput, confirmPasswordInput].forEach(input => {
         input.addEventListener('input', () => {
-            input.closest('.form-group').classList.remove('error');
+            const group = input.closest('.form-group');
+            if (group) group.classList.remove('error');
+            if (input === emailInput) {
+                const errSpan = group ? group.querySelector('.error-msg') : null;
+                if (errSpan) errSpan.textContent = 'Please enter a valid email address.';
+            }
         });
     });
 });

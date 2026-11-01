@@ -10,8 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submitBtn');
     const quickFillAdminBtn = document.getElementById('quickFillAdminBtn');
     const quickFillFreelancerBtn = document.getElementById('quickFillFreelancerBtn');
+    const quickFillClientBtn = document.getElementById('quickFillClientBtn');
 
-    // Hardcoded Admin & Freelancer Credentials
+    // Hardcoded Admin, Freelancer & Client Credentials
     const ADMIN_CREDENTIALS = {
         email: 'admin@milestones.com',
         alias: 'admin',
@@ -24,6 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
         alias: 'freelancer',
         password: 'freelancer123',
         aliasPassword: 'freelancer'
+    };
+
+    const CLIENT_CREDENTIALS = {
+        email: 'client@milestones.com',
+        alias: 'client',
+        password: 'client123',
+        aliasPassword: 'client'
     };
 
     // Toggle Password Visibility
@@ -84,11 +92,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Quick Fill Client Credentials
+    if (quickFillClientBtn) {
+        quickFillClientBtn.addEventListener('click', () => {
+            emailInput.value = CLIENT_CREDENTIALS.email;
+            passwordInput.value = CLIENT_CREDENTIALS.password;
+            
+            document.querySelectorAll('.form-group').forEach(group => group.classList.remove('error'));
+            if (errorBanner) errorBanner.classList.add('hidden');
+            
+            quickFillClientBtn.textContent = 'Filled!';
+            quickFillClientBtn.style.backgroundColor = '#3b82f6';
+            setTimeout(() => {
+                quickFillClientBtn.textContent = 'Client Fill';
+                quickFillClientBtn.style.backgroundColor = '#3b82f6';
+            }, 1200);
+
+            passwordInput.focus();
+        });
+    }
+
     // Validation Functions
     const isValidEmailOrUsername = (val) => {
         if (!val || val.trim() === '') return false;
         const trimmed = val.trim().toLowerCase();
-        if (trimmed === 'admin' || trimmed === 'freelancer') return true;
+        if (trimmed === 'admin' || trimmed === 'freelancer' || trimmed === 'client') return true;
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
     };
 
@@ -152,6 +180,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         submitBtn.textContent = 'Access Granted!';
                         if (successMessage) successMessage.classList.remove('hidden');
                         setTimeout(() => { window.location.href = 'freelancer.html'; }, 600);
+                    } else if (role === 'client') {
+                        if (successText) successText.textContent = `Welcome back, ${user.name}! Loading Client Dashboard...`;
+                        submitBtn.textContent = 'Access Granted!';
+                        if (successMessage) successMessage.classList.remove('hidden');
+                        setTimeout(() => { window.location.href = 'client.html'; }, 600);
                     } else {
                         if (successText) successText.textContent = `Welcome, ${user.name}! Loading Projects & Marketplace...`;
                         submitBtn.textContent = 'Access Granted!';
@@ -223,6 +256,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     submitBtn.disabled = false;
                     submitBtn.textContent = 'Login';
                     if (errorBannerText) errorBannerText.textContent = 'Incorrect password for freelancer. (Hint: freelancer123)';
+                    if (errorBanner) errorBanner.classList.remove('hidden');
+                    passwordInput.closest('.form-group').classList.add('error');
+                    passwordInput.focus();
+                }, 400);
+            }
+        } else if (emailVal === CLIENT_CREDENTIALS.email.toLowerCase() || emailVal === CLIENT_CREDENTIALS.alias) {
+            if (passwordVal === CLIENT_CREDENTIALS.password || passwordVal === CLIENT_CREDENTIALS.aliasPassword) {
+                setTimeout(() => {
+                    sessionStorage.setItem('milestones_user', JSON.stringify({
+                        role: 'client',
+                        name: 'Client',
+                        email: 'client@milestones.com'
+                    }));
+                    if (successText) successText.textContent = 'Welcome back, Client! Loading Client Dashboard...';
+                    if (successMessage) successMessage.classList.remove('hidden');
+                    submitBtn.textContent = 'Access Granted!';
+                    setTimeout(() => { window.location.href = 'client.html'; }, 800);
+                }, 600);
+            } else {
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Login';
+                    if (errorBannerText) errorBannerText.textContent = 'Incorrect password for client. (Hint: client123)';
                     if (errorBanner) errorBanner.classList.remove('hidden');
                     passwordInput.closest('.form-group').classList.add('error');
                     passwordInput.focus();

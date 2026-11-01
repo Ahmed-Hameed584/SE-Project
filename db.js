@@ -16,6 +16,19 @@
     const INITIAL_SEED_DATA = {
         users: [
             {
+                id: "USR-800",
+                name: "Client",
+                email: "client@milestones.com",
+                role: "Client",
+                status: "Active",
+                verified: true,
+                company: "Client Representative",
+                skills: ["Product Strategy", "Venture Building"],
+                joined: "Jan 01, 2026",
+                projects: 4,
+                phone: "+1 (555) 012-3456"
+            },
+            {
                 id: "USR-801",
                 name: "Administrator",
                 email: "admin@milestones.com",
@@ -92,10 +105,211 @@
                 joined: "May 10, 2026",
                 projects: 1,
                 phone: "+1 (555) 671-8890"
+            },
+            {
+                id: "USR-807",
+                name: "Ahmed Raza",
+                email: "ahmed.raza@milestones.dev",
+                role: "Freelancer",
+                status: "Active",
+                verified: true,
+                skills: ["Mobile UI", "Flutter", "React Native"],
+                joined: "Feb 01, 2026",
+                projects: 1
+            },
+            {
+                id: "USR-808",
+                name: "Bilal Khan",
+                email: "bilal.khan@milestones.dev",
+                role: "Freelancer",
+                status: "Active",
+                verified: true,
+                skills: ["Frontend", "HTML/CSS", "UI Prototyping"],
+                joined: "Feb 10, 2026",
+                projects: 1
+            },
+            {
+                id: "USR-809",
+                name: "Zara Malik",
+                email: "zara.malik@milestones.dev",
+                role: "Freelancer",
+                status: "Active",
+                verified: true,
+                skills: ["Brand Identity", "Logo Design", "Typography"],
+                joined: "Feb 15, 2026",
+                projects: 1
             }
         ],
 
         projects: [
+            {
+                id: "#PRJ-CL-101",
+                name: "App Redesign",
+                category: "UI/UX Design",
+                client: "Client",
+                clientCompany: "Client Representative",
+                clientEmail: "client@milestones.com",
+                clientInitials: "CL",
+                freelancer: "Ahmed Raza",
+                freelancerEmail: "ahmed.raza@milestones.dev",
+                freelancerInitials: "AR",
+                budget: "45,000",
+                budgetValue: 45000,
+                escrow: "45,000 (100%)",
+                deadline: "Dec 30, 2026",
+                status: "Active",
+                description: "Redesign the mobile app screens with a cleaner look and better navigation.",
+                skills: ["Mobile App", "UI/UX", "Figma"],
+                milestones: [
+                    {
+                        title: "Project Setup",
+                        amount: "5,000",
+                        amountValue: 5000,
+                        status: "Paid",
+                        done: true,
+                        description: "Set up the project files and the design brief.",
+                        note: "Paid. This milestone is locked."
+                    },
+                    {
+                        title: "Design Mockups",
+                        amount: "15,000",
+                        amountValue: 15000,
+                        status: "Approved",
+                        done: false,
+                        description: "Create mockups for the main screens.",
+                        canReleasePayment: true
+                    },
+                    {
+                        title: "Frontend Pages",
+                        amount: "15,000",
+                        amountValue: 15000,
+                        status: "Submitted",
+                        done: false,
+                        description: "Build the main pages in HTML and CSS.",
+                        freelancerNotes: "Homepage and product pages are finished.",
+                        canApprove: true,
+                        canReject: true
+                    },
+                    {
+                        title: "Final Delivery",
+                        amount: "10,000",
+                        amountValue: 10000,
+                        status: "Disputed",
+                        done: false,
+                        description: "Deliver final files and handover notes.",
+                        clientFeedback: "Please fix the footer layout and resubmit.",
+                        disputeNotice: "Freelancer disputed this rejection. Under admin review - awaiting decision."
+                    }
+                ]
+            },
+            {
+                id: "#PRJ-CL-102",
+                name: "Landing Page",
+                category: "Web Development",
+                client: "Client",
+                clientCompany: "Client Representative",
+                clientEmail: "client@milestones.com",
+                clientInitials: "CL",
+                freelancer: "Bilal Khan",
+                freelancerEmail: "bilal.khan@milestones.dev",
+                freelancerInitials: "BK",
+                budget: "20,000",
+                budgetValue: 20000,
+                escrow: "20,000 (100%)",
+                deadline: "Nov 25, 2026",
+                status: "Proposed",
+                description: "Design and build a one-page landing page for our new product launch.",
+                skills: ["HTML/CSS", "Web Design", "Responsive"],
+                milestones: [
+                    {
+                        title: "Design Mockup",
+                        amount: "8,000",
+                        amountValue: 8000,
+                        status: "Pending",
+                        done: false,
+                        description: "Create the layout for the page."
+                    },
+                    {
+                        title: "Build Page",
+                        amount: "12,000",
+                        amountValue: 12000,
+                        status: "Pending",
+                        done: false,
+                        description: "Convert the design into HTML and CSS."
+                    }
+                ],
+                proposal: {
+                    id: "#PROP-201",
+                    author: "Bilal Khan",
+                    freelancer: "Bilal Khan",
+                    freelancerEmail: "bilal.khan@milestones.dev",
+                    bidAmount: 20000,
+                    coverLetter: "I will design the page first and share mockups for your review, then build it in HTML and CSS. I can finish within two weeks.",
+                    proposedMilestones: [
+                        { title: "Design Mockup", amount: "8,000", amountValue: 8000, description: "Create the layout for the page." },
+                        { title: "Build Page", amount: "12,000", amountValue: 12000, description: "Convert the design into HTML and CSS." }
+                    ]
+                }
+            },
+            {
+                id: "#PRJ-CL-103",
+                name: "Blog Setup",
+                category: "Content & Web",
+                client: "Client",
+                clientCompany: "Client Representative",
+                clientEmail: "client@milestones.com",
+                clientInitials: "CL",
+                freelancer: "-",
+                freelancerEmail: "",
+                freelancerInitials: "--",
+                budget: "10,000",
+                budgetValue: 10000,
+                escrow: "10,000 (100%)",
+                deadline: "Dec 05, 2026",
+                status: "Open",
+                description: "Set up a clean modern blog with markdown support, author profiles, and SEO optimization.",
+                skills: ["Blog", "SEO", "CMS"],
+                milestones: []
+            },
+            {
+                id: "#PRJ-CL-104",
+                name: "Logo Refresh",
+                category: "Branding",
+                client: "Client",
+                clientCompany: "Client Representative",
+                clientEmail: "client@milestones.com",
+                clientInitials: "CL",
+                freelancer: "Zara Malik",
+                freelancerEmail: "zara.malik@milestones.dev",
+                freelancerInitials: "ZM",
+                budget: "20,000",
+                budgetValue: 20000,
+                escrow: "20,000 (100%)",
+                deadline: "Oct 25, 2026",
+                status: "Completed",
+                description: "Corporate brand logo refresh, vector icons, and typography guidelines.",
+                skills: ["Logo Design", "Vector", "Brand Guidelines"],
+                milestones: [
+                    {
+                        title: "Final Logo",
+                        amount: "12,000",
+                        amountValue: 12000,
+                        status: "Paid",
+                        done: true,
+                        description: "Final vector exports, SVGs, and brand style guide.",
+                        note: "Paid. This milestone is locked."
+                    },
+                    {
+                        title: "Concept Sketches",
+                        amount: "8,000",
+                        amountValue: 8000,
+                        status: "Paid",
+                        done: true,
+                        description: "Initial brand concepts and pencil sketches.",
+                        note: "Paid. This milestone is locked."
+                    }
+                ]
+            },
             {
                 id: "#PRJ-101",
                 name: "App Redesign",
@@ -213,6 +427,22 @@
 
         proposals: [
             {
+                id: "#PROP-201",
+                projectId: "#PRJ-CL-102",
+                projectTitle: "Landing Page",
+                freelancer: "Bilal Khan",
+                freelancerEmail: "bilal.khan@milestones.dev",
+                bidAmount: 20000,
+                timeline: "2 weeks",
+                coverLetter: "I will design the page first and share mockups for your review, then build it in HTML and CSS. I can finish within two weeks.",
+                status: "Pending Review",
+                submittedDate: "Oct 25, 2026",
+                proposedMilestones: [
+                    { title: "Design Mockup", amount: "8,000", amountValue: 8000, description: "Create the layout for the page." },
+                    { title: "Build Page", amount: "12,000", amountValue: 12000, description: "Convert the design into HTML and CSS." }
+                ]
+            },
+            {
                 id: "#PROP-301",
                 projectId: "#PRJ-104",
                 projectTitle: "Fintech Mobile Banking Dashboard",
@@ -227,6 +457,57 @@
         ],
 
         transactions: [
+            {
+                id: "#TX-CL-001",
+                projectId: "#PRJ-CL-101",
+                project: "App Redesign",
+                milestone: "Project Setup",
+                party: "Ahmed Raza",
+                to: "Ahmed Raza",
+                freelancer: "Ahmed Raza",
+                freelancerEmail: "ahmed.raza@milestones.dev",
+                client: "Client",
+                clientEmail: "client@milestones.com",
+                amount: "5,000",
+                amountValue: 5000,
+                type: "Milestone Payout",
+                date: "2026-10-20 14:30",
+                status: "Completed"
+            },
+            {
+                id: "#TX-CL-002",
+                projectId: "#PRJ-CL-104",
+                project: "Logo Refresh",
+                milestone: "Final Logo",
+                party: "Zara Malik",
+                to: "Zara Malik",
+                freelancer: "Zara Malik",
+                freelancerEmail: "zara.malik@milestones.dev",
+                client: "Client",
+                clientEmail: "client@milestones.com",
+                amount: "12,000",
+                amountValue: 12000,
+                type: "Milestone Payout",
+                date: "2026-10-22 10:05",
+                status: "Completed"
+            },
+            {
+                id: "#TX-CL-003",
+                projectId: "#PRJ-CL-104",
+                project: "Logo Refresh",
+                milestone: "Concept Sketches",
+                party: "Zara Malik",
+                to: "Zara Malik",
+                freelancer: "Zara Malik",
+                freelancerEmail: "zara.malik@milestones.dev",
+                client: "Client",
+                clientEmail: "client@milestones.com",
+                amount: "8,000",
+                amountValue: 8000,
+                type: "Milestone Payout",
+                date: "2026-10-24 17:45",
+                status: "Completed"
+            },
             {
                 id: "#TX-901",
                 projectId: "#PRJ-101",
@@ -326,6 +607,30 @@
                 if (stored) {
                     const parsed = JSON.parse(stored);
                     if (parsed && parsed.users && parsed.projects) {
+                        let modified = false;
+                        // Ensure client user exists
+                        if (!parsed.users.some(u => u.email && u.email.toLowerCase() === 'client@milestones.com')) {
+                            parsed.users.unshift(INITIAL_SEED_DATA.users[0]);
+                            modified = true;
+                        }
+                        // Ensure wireframe client projects exist
+                        INITIAL_SEED_DATA.projects.forEach(p => {
+                            if (p.id && p.id.startsWith('#PRJ-CL-') && !parsed.projects.some(ep => ep.id === p.id)) {
+                                parsed.projects.unshift(p);
+                                modified = true;
+                            }
+                        });
+                        // Ensure wireframe client transactions exist
+                        if (!parsed.transactions) parsed.transactions = [];
+                        INITIAL_SEED_DATA.transactions.forEach(t => {
+                            if (t.id && t.id.startsWith('#TX-CL-') && !parsed.transactions.some(et => et.id === t.id)) {
+                                parsed.transactions.unshift(t);
+                                modified = true;
+                            }
+                        });
+                        if (modified) {
+                            this._saveDB(parsed);
+                        }
                         return parsed;
                     }
                 }
@@ -393,6 +698,8 @@
                     window.location.href = 'admin.html';
                 } else if (user.role.toLowerCase() === 'freelancer') {
                     window.location.href = 'freelancer.html';
+                } else if (user.role.toLowerCase() === 'client') {
+                    window.location.href = 'client.html';
                 } else {
                     window.location.href = 'index.html';
                 }
@@ -428,6 +735,19 @@
                     name: "Ali Hassan",
                     email: "freelancer@milestones.com",
                     role: "freelancer",
+                    verified: true
+                };
+                this.setCurrentUser(dbUser);
+                return { success: true, user: dbUser };
+            }
+
+            // Demo hardcoded client check
+            if ((trimmed === 'client@milestones.com' || trimmed === 'client') && (pass === 'client123' || pass === 'client')) {
+                const dbUser = this.getUserByEmail('client@milestones.com') || {
+                    id: "USR-800",
+                    name: "Client",
+                    email: "client@milestones.com",
+                    role: "Client",
                     verified: true
                 };
                 this.setCurrentUser(dbUser);
@@ -942,6 +1262,215 @@
                 releasedFunds: releasedFunds,
                 platformFeeRevenue: platformFeeRevenue
             };
+        },
+
+        // =====================================================================
+        // CLIENT WORKFLOWS & HELPER METHODS
+        // =====================================================================
+
+        getClientProjects: function (clientEmailOrName) {
+            const projects = this.getProjects();
+            const norm = (clientEmailOrName || '').toLowerCase().trim();
+            if (!norm || norm === 'client@milestones.com' || norm === 'client') {
+                // If demo Client, return projects owned by client@milestones.com
+                const clientProj = projects.filter(p => 
+                    (p.clientEmail && p.clientEmail.toLowerCase() === 'client@milestones.com') ||
+                    (p.client && p.client.toLowerCase() === 'client') ||
+                    (p.id && p.id.startsWith('#PRJ-CL-'))
+                );
+                if (clientProj.length > 0) return clientProj;
+            }
+            // Otherwise match by email or name
+            const matching = projects.filter(p => {
+                const pEmail = (p.clientEmail || '').toLowerCase();
+                const pName = (p.client || '').toLowerCase();
+                return (pEmail && pEmail === norm) || (pName && pName === norm);
+            });
+            if (matching.length > 0) return matching;
+
+            // Fallback for demo: return client wireframe projects
+            return projects.filter(p => (p.clientEmail && p.clientEmail.toLowerCase() === 'client@milestones.com') || (p.id && p.id.startsWith('#PRJ-CL-')));
+        },
+
+        getClientPayments: function (clientEmailOrName) {
+            const txs = this.getTransactions();
+            const norm = (clientEmailOrName || '').toLowerCase().trim();
+            const clientProjects = this.getClientProjects(clientEmailOrName).map(p => (p.name || '').toLowerCase());
+            
+            return txs.filter(t => {
+                const tClient = (t.client || '').toLowerCase();
+                const tEmail = (t.clientEmail || '').toLowerCase();
+                const tProj = (t.project || '').toLowerCase();
+                const isClientDirect = (tEmail && tEmail === norm) || (tClient && tClient === norm) || (tClient === 'client');
+                const isClientProject = clientProjects.includes(tProj);
+                return (isClientDirect || isClientProject || (t.id && t.id.startsWith('#TX-CL-'))) && (t.type === 'Milestone Payout' || t.amountValue > 0);
+            });
+        },
+
+        postClientProject: function (data, clientUser) {
+            const db = this._getDB();
+            let maxId = 100;
+            if (db.projects && db.projects.length) {
+                db.projects.forEach(p => {
+                    const num = parseInt(String(p.id || '').replace(/\D/g, ''), 10);
+                    if (!isNaN(num) && num > maxId) maxId = num;
+                });
+            }
+            const newId = `#PRJ-${maxId + 1}`;
+            const rawBudget = Number(String(data.budget).replace(/[^0-9.]/g, '')) || 10000;
+            const cName = clientUser ? (clientUser.name || "Client") : "Client";
+            const cEmail = clientUser ? (clientUser.email || "client@milestones.com") : "client@milestones.com";
+
+            const project = {
+                id: newId,
+                name: data.title ? data.title.trim() : (data.name ? data.name.trim() : "Untitled Project"),
+                category: data.category || "General",
+                client: cName,
+                clientCompany: clientUser && clientUser.company ? clientUser.company : "Client Representative",
+                clientEmail: cEmail,
+                clientInitials: cName.substring(0, 2).toUpperCase(),
+                freelancer: "-",
+                freelancerEmail: "",
+                freelancerInitials: "--",
+                budget: `${rawBudget.toLocaleString()}`,
+                budgetValue: rawBudget,
+                escrow: `${rawBudget.toLocaleString()} (100%)`,
+                deadline: data.deadline || "In 30 Days",
+                status: "Open",
+                description: data.requirements ? data.requirements.trim() : (data.description ? data.description.trim() : "Project specifications."),
+                skills: Array.isArray(data.skills) ? data.skills : ["General"],
+                milestones: []
+            };
+
+            db.projects.unshift(project);
+            this._saveDB(db);
+            return project;
+        },
+
+        acceptClientProposal: function (projectId) {
+            const db = this._getDB();
+            const project = db.projects.find(p => p.id === projectId);
+            if (!project) return false;
+
+            const proposal = project.proposal || (db.proposals ? db.proposals.find(pr => pr.projectId === projectId) : null);
+            
+            project.status = "Active";
+            if (proposal) {
+                project.freelancer = proposal.freelancer || proposal.author || "Freelancer";
+                project.freelancerEmail = proposal.freelancerEmail || "freelancer@milestones.com";
+                project.freelancerInitials = project.freelancer.substring(0, 2).toUpperCase();
+                if (proposal.proposedMilestones && proposal.proposedMilestones.length > 0) {
+                    project.milestones = proposal.proposedMilestones.map(m => ({
+                        title: m.title,
+                        amount: String(m.amount).replace('$', ''),
+                        amountValue: m.amountValue || Number(String(m.amount).replace(/[^0-9.]/g, '')),
+                        status: "Pending",
+                        done: false,
+                        description: m.description || ""
+                    }));
+                }
+            } else if (!project.freelancer || project.freelancer === '-') {
+                project.freelancer = "Assigned Freelancer";
+            }
+
+            this._saveDB(db);
+            return project;
+        },
+
+        declineClientProposal: function (projectId) {
+            const db = this._getDB();
+            const project = db.projects.find(p => p.id === projectId);
+            if (!project) return false;
+
+            project.status = "Open";
+            project.freelancer = "-";
+            project.freelancerEmail = "";
+            project.freelancerInitials = "--";
+            project.proposalDeclined = true;
+            delete project.proposal;
+
+            this._saveDB(db);
+            return project;
+        },
+
+        approveMilestoneByClient: function (projectId, milestoneIndex) {
+            const db = this._getDB();
+            const project = db.projects.find(p => p.id === projectId);
+            if (!project || !project.milestones || !project.milestones[milestoneIndex]) return false;
+
+            const ms = project.milestones[milestoneIndex];
+            ms.status = "Approved";
+            ms.canReleasePayment = true;
+            ms.canApprove = false;
+            ms.canReject = false;
+
+            this._saveDB(db);
+            return ms;
+        },
+
+        rejectMilestoneByClient: function (projectId, milestoneIndex, feedback) {
+            const db = this._getDB();
+            const project = db.projects.find(p => p.id === projectId);
+            if (!project || !project.milestones || !project.milestones[milestoneIndex]) return false;
+
+            const ms = project.milestones[milestoneIndex];
+            ms.status = "Disputed";
+            ms.clientFeedback = feedback ? feedback.trim() : "Feedback required";
+            ms.disputeNotice = "Freelancer disputed this rejection. Under admin review - awaiting decision.";
+            ms.canReleasePayment = false;
+            ms.canApprove = false;
+            ms.canReject = false;
+
+            this._saveDB(db);
+            return ms;
+        },
+
+        releaseClientMilestonePayment: function (projectId, milestoneIndex) {
+            const db = this._getDB();
+            const project = db.projects.find(p => p.id === projectId);
+            if (!project || !project.milestones || !project.milestones[milestoneIndex]) return false;
+
+            const ms = project.milestones[milestoneIndex];
+            ms.status = "Paid";
+            ms.done = true;
+            ms.canReleasePayment = false;
+            ms.locked = true;
+            ms.note = "Paid. This milestone is locked.";
+
+            const numAmount = ms.amountValue || Number(String(ms.amount).replace(/[^0-9.]/g, '')) || 0;
+
+            const now = new Date();
+            const pad = (n) => ('0' + n).slice(-2);
+            const dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+            const tx = {
+                id: `#TX-CL-${Date.now().toString().slice(-4)}`,
+                projectId: project.id,
+                project: project.name,
+                milestone: ms.title,
+                party: project.freelancer,
+                to: project.freelancer,
+                freelancer: project.freelancer,
+                freelancerEmail: project.freelancerEmail,
+                client: project.client,
+                clientEmail: project.clientEmail,
+                amount: numAmount.toLocaleString(),
+                amountValue: numAmount,
+                type: "Milestone Payout",
+                date: dateStr,
+                status: "Completed"
+            };
+
+            db.transactions.unshift(tx);
+
+            // Check if all milestones are paid
+            const allPaid = project.milestones.length > 0 && project.milestones.every(m => m.status === 'Paid' || m.done);
+            if (allPaid) {
+                project.status = "Completed";
+            }
+
+            this._saveDB(db);
+            return { success: true, project, milestone: ms, transaction: tx };
         },
 
         resetToSeedData: function () {

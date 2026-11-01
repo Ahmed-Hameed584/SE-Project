@@ -131,7 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const requestPayoutBtn = document.getElementById('requestPayoutBtn');
     const withdrawNowBtn = document.getElementById('withdrawNowBtn');
     const quickWithdrawBtn = document.getElementById('quickWithdrawBtn');
-    const availableBalanceDisplay = document.querySelector('.stat-value');
+    const availableBalanceDisplay = document.getElementById('availableBalanceDisplay') || document.querySelector('.stat-value');
+    const statTotalEarnings = document.getElementById('statTotalEarnings');
+    const statInEscrow = document.getElementById('statInEscrow');
     const withdrawModalBalance = document.getElementById('withdrawModalBalance');
 
     // Modals
@@ -778,9 +780,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update Balance displays
         refreshCurrentUser();
-        const avail = currentUser.availableBalance || 2150.00;
+        const avail = currentUser.availableBalance !== undefined ? currentUser.availableBalance : 2150.00;
+        const totalEarn = currentUser.totalEarned !== undefined ? currentUser.totalEarned : 7850.00;
+        const inEsc = currentUser.inEscrow !== undefined ? currentUser.inEscrow : 3400.00;
+
         if (availableBalanceDisplay) availableBalanceDisplay.textContent = `$${avail.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         if (withdrawModalBalance) withdrawModalBalance.textContent = `$${avail.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        if (statTotalEarnings) statTotalEarnings.textContent = `$${totalEarn.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        if (statInEscrow) statInEscrow.textContent = `$${inEsc.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }
 
     function openWithdrawalModal() {
@@ -1217,9 +1224,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function escapeHtml(text) {
         if (!text) return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+        return String(text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
 
     // =========================================================================

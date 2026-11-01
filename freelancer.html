@@ -146,6 +146,12 @@
                                 <span>Switch to Admin Portal</span>
                             </button>
                         </li>
+                        <li>
+                            <button class="dropdown-item" onclick="window.location.href='client.html'">
+                                <i class="ph ph-briefcase"></i>
+                                <span>Switch to Client Portal</span>
+                            </button>
+                        </li>
                     </ul>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item logout-item" id="navLogoutBtn">
@@ -349,7 +355,7 @@
                                 <i class="ph-bold ph-wallet"></i>
                             </div>
                         </div>
-                        <div class="stat-value">$7,850</div>
+                        <div class="stat-value" id="statTotalEarnings">$7,850</div>
                         <div class="stat-subtext text-emerald">
                             <i class="ph-bold ph-arrow-up-right"></i>
                             <span>+$1,200 this month</span>
@@ -363,7 +369,7 @@
                                 <i class="ph-bold ph-lock-key"></i>
                             </div>
                         </div>
-                        <div class="stat-value">$3,400</div>
+                        <div class="stat-value" id="statInEscrow">$3,400</div>
                         <div class="stat-subtext text-muted">Secured by Milestones</div>
                     </div>
 
@@ -374,7 +380,7 @@
                                 <i class="ph-bold ph-check-circle"></i>
                             </div>
                         </div>
-                        <div class="stat-value">5 / 7</div>
+                        <div class="stat-value" id="statMilestonesDone">5 / 7</div>
                         <div class="stat-subtext text-emerald">71% Completion Rate</div>
                     </div>
 
@@ -385,7 +391,7 @@
                                 <i class="ph-bold ph-bank"></i>
                             </div>
                         </div>
-                        <div class="stat-value">$2,150</div>
+                        <div class="stat-value" id="availableBalanceDisplay">$2,150</div>
                         <div class="stat-subtext">
                             <button class="inline-link-btn" id="quickWithdrawBtn">Withdraw &rarr;</button>
                         </div>

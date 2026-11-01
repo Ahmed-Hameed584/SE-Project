@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MileStone - Client Workspace</title>
+    <meta name="description" content="MileStone Client Dashboard - Post projects, review proposals and release payments in one place.">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Dark Theme Client Stylesheet -->
+    <link rel="stylesheet" href="client.css">
+</head>
+<body>
+
+    <!-- =========================================================================
+         1. TOP NAVIGATION BAR (Wireframe: MileStone, Search, Notification, Client Account)
+         ========================================================================= -->
+    <header class="top-navbar" id="topNavbar">
+        <div class="nav-left">
+            <button class="mobile-sidebar-toggle" id="mobileSidebarToggle" aria-label="Toggle navigation menu">
+                <i class="ph ph-list"></i>
+            </button>
+            <a href="client.html" class="brand-logo" id="brandLogo">
+                <div class="logo-icon-wrap">
+                    <i class="ph-fill ph-target"></i>
+                </div>
+                <span class="logo-text">MileStone</span>
+                <span class="client-badge">Client</span>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <!-- Global Search Box (Wireframe: Search projects...) -->
+            <div class="search-box-wrapper" id="searchBoxWrapper">
+                <i class="ph ph-magnifying-glass search-icon"></i>
+                <input 
+                    type="text" 
+                    id="globalSearchInput" 
+                    class="search-input" 
+                    placeholder="Search projects..." 
+                    autocomplete="off"
+                    aria-label="Search projects"
+                >
+                <button class="search-clear-btn hidden" id="searchClearBtn" aria-label="Clear search">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <!-- Notification Center (Wireframe: Notification Icon) -->
+            <div class="nav-item-dropdown-wrap">
+                <button class="icon-button notification-btn" id="notificationBtn" aria-label="Notification Icon" aria-expanded="false" title="Notification Icon">
+                    <i class="ph ph-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">2</span>
+                </button>
+
+                <!-- Notifications Dropdown Panel -->
+                <div class="notification-dropdown dropdown-panel hidden" id="notificationDropdown">
+                    <div class="dropdown-header">
+                        <div class="dropdown-title">
+                            <i class="ph-bold ph-bell-simple" style="color: var(--primary);"></i>
+                            <h4>Notifications</h4>
+                            <span class="unread-pill" id="unreadPill">2 new</span>
+                        </div>
+                        <button class="text-btn" id="markAllReadBtn">Mark all as read</button>
+                    </div>
+                    <ul class="notification-list" id="notificationList">
+                        <li class="notification-item unread">
+                            <div class="notif-icon primary">
+                                <i class="ph-bold ph-paper-plane-tilt"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text"><strong>New Proposal Received:</strong> Bilal Khan sent a proposal on <strong>Landing Page</strong> ($20,000).</p>
+                                <span class="notif-time">10 mins ago</span>
+                            </div>
+                            <span class="unread-dot"></span>
+                        </li>
+                        <li class="notification-item unread">
+                            <div class="notif-icon warning">
+                                <i class="ph-bold ph-file-arrow-up"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text"><strong>Work Submitted:</strong> Ahmed Raza submitted deliverables for <em>Frontend Pages</em> ($15,000) on <strong>App Redesign</strong>.</p>
+                                <span class="notif-time">1 hour ago</span>
+                            </div>
+                            <span class="unread-dot"></span>
+                        </li>
+                        <li class="notification-item">
+                            <div class="notif-icon success">
+                                <i class="ph-bold ph-check-circle"></i>
+                            </div>
+                            <div class="notif-content">
+                                <p class="notif-text"><strong>Payment Released:</strong> Simulated payment of $5,000 for <em>Project Setup</em> on <strong>App Redesign</strong> was completed.</p>
+                                <span class="notif-time">2 days ago</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="dropdown-footer">
+                        <button class="view-all-btn" id="clearNotifsBtn">Clear Notifications</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Account Dropdown (Wireframe: Client Account) -->
+            <div class="nav-item-dropdown-wrap">
+                <button class="user-profile-btn" id="clientProfileBtn" aria-expanded="false" title="Client Account">
+                    <div class="user-avatar" id="navUserAvatar">
+                        <span class="avatar-initials">CL</span>
+                    </div>
+                    <div class="user-meta-text">
+                        <span class="client-name" id="navClientName">Client</span>
+                        <span class="client-role-text">Client Account</span>
+                    </div>
+                    <i class="ph ph-caret-down dropdown-arrow"></i>
+                </button>
+
+                <!-- Profile Dropdown Menu -->
+                <div class="profile-dropdown dropdown-panel hidden" id="clientDropdown">
+                    <div class="profile-card-header">
+                        <div class="profile-card-avatar">CL</div>
+                        <div class="profile-card-info">
+                            <h5 class="profile-card-name" id="menuClientName">Client</h5>
+                            <p class="profile-card-email" id="menuClientEmail">client@milestones.com</p>
+                            <span class="profile-role-badge">Verified Client</span>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <ul class="dropdown-menu-list">
+                        <li>
+                            <button class="dropdown-item" id="menuSwitchFreelancer" onclick="window.location.href='freelancer.html'">
+                                <i class="ph ph-user-circle"></i>
+                                <span>Switch to Freelancer Workspace</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" id="menuSwitchAdmin" onclick="window.location.href='admin.html'">
+                                <i class="ph ph-shield-check"></i>
+                                <span>Switch to Admin Portal</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" onclick="window.location.href='index.html'">
+                                <i class="ph ph-house"></i>
+                                <span>Platform Home</span>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item logout-item" id="menuLogoutBtn">
+                        <i class="ph ph-sign-out"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         2. MAIN WORKSPACE CONTAINER (Sidebar + Content)
+         ========================================================================= -->
+    <div class="workspace-layout">
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Sidebar Navigation (Wireframe: Main Menu -> Dashboard [T1], Post Project [T2], Payments [T3], Logout [T4]) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-heading">Main Menu</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <!-- T1: Dashboard Nav Item -->
+                <button class="nav-link active" data-tab="dashboard" id="navTabDashboard" title="Dashboard">
+                    <span class="nav-indicator-dot"></span>
+                    <i class="ph-bold ph-squares-four nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </button>
+
+                <!-- T2: Post Project Nav Item -->
+                <button class="nav-link" data-tab="post-project" id="navTabPostProject" title="Post Project">
+                    <span class="nav-indicator-dot"></span>
+                    <i class="ph-bold ph-plus-circle nav-icon"></i>
+                    <span class="nav-text">Post Project</span>
+                </button>
+
+                <!-- T3: Payments Nav Item -->
+                <button class="nav-link" data-tab="payments" id="navTabPayments" title="Payments">
+                    <span class="nav-indicator-dot"></span>
+                    <i class="ph-bold ph-credit-card nav-icon"></i>
+                    <span class="nav-text">Payments</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <!-- T4: Logout Nav Item -->
+                <button class="nav-link logout-btn" id="sidebarLogoutBtn" title="Logout">
+                    <span class="nav-indicator-dot"></span>
+                    <i class="ph-bold ph-sign-out nav-icon"></i>
+                    <span class="nav-text">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- =====================================================================
+             3. MAIN CONTENT VIEWS
+             ===================================================================== -->
+        <main class="main-content" id="mainContent">
+
+            <!-- -----------------------------------------------------------------
+                 VIEW 1: CLIENT DASHBOARD (Wireframe: page_9443e5dcf267487a804aec4fdd38cdf4)
+                 ----------------------------------------------------------------- -->
+            <section class="tab-view active" id="viewDashboard">
+                <div class="view-header">
+                    <div class="view-title-wrap">
+                        <h1 class="page-title">Welcome back, Client!</h1>
+                        <p class="page-subtitle">Post projects, review proposals and release payments in one place.</p>
+                    </div>
+                </div>
+
+                <!-- T5: Tip Banner -->
+                <div class="tip-banner" id="tipBanner">
+                    <div class="tip-icon-wrap">
+                        <i class="ph-bold ph-lightbulb"></i>
+                    </div>
+                    <div class="tip-text">
+                        Tip: when a freelancer sends a proposal, open the project to accept or decline it.
+                    </div>
+                </div>
+
+                <!-- My Projects Section -->
+                <div class="content-section">
+                    <div class="section-top-bar">
+                        <div class="section-title-wrap">
+                            <h2 class="section-title">My Projects</h2>
+                            <span class="count-badge" id="myProjectsCountBadge">4 projects</span>
+                        </div>
+                        <!-- T6: Post new project button -->
+                        <button class="btn btn-primary" id="btnPostNewProject">
+                            <i class="ph-bold ph-plus"></i>
+                            <span>Post new project</span>
+                        </button>
+                    </div>
+
+                    <!-- T7: My Projects Table -->
+                    <div class="table-responsive">
+                        <table class="data-table" id="clientProjectsTable">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Budget</th>
+                                    <th>Freelancer</th>
+                                    <th>Status</th>
+                                    <th>Milestones</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientProjectsTableBody">
+                                <!-- Populated dynamically by client.js matching wireframe -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- T8-T10: Empty State Box -->
+                    <div class="empty-state-dashed hidden" id="emptyStateProjects">
+                        <div class="empty-icon-wrap">
+                            <i class="ph ph-folder-dashed"></i>
+                        </div>
+                        <p class="empty-text">[Empty state] You have not posted any project yet. Click 'Post new project' to start.</p>
+                        <button class="btn btn-primary btn-sm" id="emptyStatePostBtn">
+                            <i class="ph-bold ph-plus"></i>
+                            <span>Post new project</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 VIEW 2: POST PROJECT (Wireframe: page_a8f512ad9c084054b5e168102ee23c9e)
+                 ----------------------------------------------------------------- -->
+            <section class="tab-view" id="viewPostProject">
+                <div class="view-header">
+                    <div class="view-title-wrap">
+                        <h1 class="page-title">Post a Project</h1>
+                        <p class="page-subtitle">Describe what you need. Freelancers will see it and send you a proposal.</p>
+                    </div>
+                </div>
+
+                <!-- T5: Validation Banner -->
+                <div class="validation-banner hidden" id="postProjectValidation">
+                    <i class="ph-bold ph-warning-circle"></i>
+                    <span>[Validation] Title, requirements and budget are required.</span>
+                </div>
+
+                <!-- Post Project Form Card -->
+                <div class="card form-card">
+                    <form id="postProjectForm" novalidate>
+                        <!-- T6: Project Title -->
+                        <div class="form-group" id="groupProjectTitle">
+                            <label for="projectTitle" class="form-label">Project title <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="projectTitle" 
+                                class="form-control" 
+                                placeholder="e.g. Mobile app redesign" 
+                                required
+                            >
+                            <span class="field-error-text">Project title is required.</span>
+                        </div>
+
+                        <!-- T7: Requirements -->
+                        <div class="form-group" id="groupProjectRequirements">
+                            <label for="projectRequirements" class="form-label">Requirements <span class="required">*</span></label>
+                            <textarea 
+                                id="projectRequirements" 
+                                class="form-control" 
+                                rows="6" 
+                                placeholder="Describe what the freelancer needs to deliver..." 
+                                required
+                            ></textarea>
+                            <span class="field-error-text">Requirements description is required.</span>
+                        </div>
+
+                        <!-- T8: Budget -->
+                        <div class="form-group" id="groupProjectBudget">
+                            <label for="projectBudget" class="form-label">Budget <span class="required">*</span></label>
+                            <div class="input-prefix-wrap">
+                                <span class="input-prefix">$</span>
+                                <input 
+                                    type="text" 
+                                    id="projectBudget" 
+                                    class="form-control prefix-input" 
+                                    placeholder="e.g. 45,000" 
+                                    required
+                                >
+                            </div>
+                            <span class="field-hint">Milestone amounts in the proposal cannot be more than this budget.</span>
+                            <span class="field-error-text">A valid budget amount is required.</span>
+                        </div>
+
+                        <!-- Form Actions (T9: Post project, T10: Cancel) -->
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="btnCancelPostProject">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="btnSubmitPostProject">
+                                <i class="ph-bold ph-paper-plane-tilt"></i>
+                                <span>Post project</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 VIEW 3: PROJECT DETAILS - PROPOSAL (Wireframe: page_6e7993885e314c5eaaa7e63b3e4a1f70)
+                 ----------------------------------------------------------------- -->
+            <section class="tab-view" id="viewDetailsProposal">
+                <!-- T10: Back link -->
+                <div class="back-nav-wrap">
+                    <button class="back-link-btn" id="backFromProposalBtn">
+                        <i class="ph-bold ph-caret-left"></i>
+                        <span>&lt; Back to my projects</span>
+                    </button>
+                </div>
+
+                <!-- Project Header with Status Badge (T5: Proposed) -->
+                <div class="project-details-header">
+                    <div class="project-title-row">
+                        <h1 class="page-title" id="proposalProjectTitle">Landing Page</h1>
+                        <span class="badge badge-proposed" id="proposalProjectBadge">Proposed</span>
+                    </div>
+                    <div class="project-meta-line" id="proposalProjectMeta">
+                        Freelancer: <strong id="proposalMetaFreelancer">Bilal Khan</strong> &nbsp;|&nbsp; Budget: <strong id="proposalMetaBudget">20,000</strong>
+                    </div>
+                    <p class="project-description-text" id="proposalProjectDesc">
+                        Design and build a one-page landing page for our new product launch.
+                    </p>
+                </div>
+
+                <!-- Proposal Box Card -->
+                <div class="card proposal-box-card">
+                    <div class="proposal-card-header">
+                        <div class="proposal-header-left">
+                            <div class="proposal-avatar" id="proposalAuthorAvatar">BK</div>
+                            <div>
+                                <h3 class="proposal-title" id="proposalCardTitle">Proposal from Bilal Khan</h3>
+                                <span class="proposal-time" id="proposalTimeAgo">Received 2 days ago</span>
+                            </div>
+                        </div>
+                        <span class="badge badge-pending">Pending Review</span>
+                    </div>
+
+                    <!-- T6: Proposal Cover Letter / Message -->
+                    <div class="proposal-message-box">
+                        <p id="proposalMessageText">
+                            I will design the page first and share mockups for your review, then build it in HTML and CSS. I can finish within two weeks.
+                        </p>
+                    </div>
+
+                    <!-- T6-T7: Proposed Milestones -->
+                    <div class="proposed-milestones-section">
+                        <h4 class="proposed-milestones-heading">Proposed milestones:</h4>
+                        <div class="proposed-milestones-list" id="proposedMilestonesList">
+                            <!-- Populated dynamically:
+                                 Design Mockup - 8,000 | Create the layout for the page.
+                                 Build Page - 12,000 | Convert the design into HTML and CSS.
+                            -->
+                        </div>
+                    </div>
+
+                    <!-- T8-T9: Action Buttons (Accept proposal / Decline) -->
+                    <div class="proposal-actions-row">
+                        <button class="btn btn-success" id="btnAcceptProposal">
+                            <i class="ph-bold ph-check"></i>
+                            <span>Accept proposal</span>
+                        </button>
+                        <button class="btn btn-danger-outline" id="btnDeclineProposal">
+                            <i class="ph-bold ph-x"></i>
+                            <span>Decline</span>
+                        </button>
+                    </div>
+
+                    <!-- Helper Notice -->
+                    <p class="proposal-footer-hint">
+                        <i class="ph ph-info"></i>
+                        <span>Accepting starts the project. Declining opens it again for new proposals.</span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 VIEW 4: PROJECT DETAILS - MILESTONES (Wireframe: page_b7fd73ca48cb4875bd04eb9d22d1d093)
+                 ----------------------------------------------------------------- -->
+            <section class="tab-view" id="viewDetailsMilestones">
+                <!-- T13: Back link -->
+                <div class="back-nav-wrap">
+                    <button class="back-link-btn" id="backFromMilestonesBtn">
+                        <i class="ph-bold ph-caret-left"></i>
+                        <span>&lt; Back to my projects</span>
+                    </button>
+                </div>
+
+                <!-- Project Header with Status Badge (T5: Active) -->
+                <div class="project-details-header">
+                    <div class="project-title-row">
+                        <h1 class="page-title" id="milestonesProjectTitle">App Redesign</h1>
+                        <span class="badge badge-active" id="milestonesProjectBadge">Active</span>
+                    </div>
+                    <div class="project-meta-line" id="milestonesProjectMeta">
+                        Freelancer: <strong id="milestonesMetaFreelancer">Ahmed Raza</strong> &nbsp;|&nbsp; Budget: <strong id="milestonesMetaBudget">45,000</strong>
+                    </div>
+                    <p class="project-description-text" id="milestonesProjectDesc">
+                        Redesign the mobile app screens with a cleaner look and better navigation.
+                    </p>
+                </div>
+
+                <!-- Milestones List Section (T6 - T12) -->
+                <div class="content-section">
+                    <div class="section-top-bar">
+                        <h2 class="section-title">Milestones</h2>
+                        <span class="milestone-progress-pill" id="milestonesProgressPill">1 / 4 paid</span>
+                    </div>
+
+                    <div class="milestones-card-list" id="clientMilestonesCardList">
+                        <!-- Populated dynamically by client.js:
+                             1. Project Setup (5,000) - Paid | Paid. This milestone is locked. (T6)
+                             2. Design Mockups (15,000) - Approved | Release payment (simulated) (T7)
+                             3. Frontend Pages (15,000) - Submitted | Freelancer's notes | Approve / Reject with Feedback (T8-T10)
+                             4. Final Delivery (10,000) - Disputed | Feedback note | Dispute under review (T11-T12)
+                        -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- -----------------------------------------------------------------
+                 VIEW 5: PAYMENTS (Wireframe: page_a64665af4f17436bb9413b163af6b73e)
+                 ----------------------------------------------------------------- -->
+            <section class="tab-view" id="viewPayments">
+                <div class="view-header">
+                    <div class="view-title-wrap">
+                        <h1 class="page-title">Payments Made</h1>
+                        <p class="page-subtitle">Simulated payments only — no real money is transferred.</p>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <!-- T5: Payments Table -->
+                    <div class="table-responsive">
+                        <table class="data-table" id="paymentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Project</th>
+                                    <th>Milestone</th>
+                                    <th>To (Freelancer)</th>
+                                    <th style="text-align: right;">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientPaymentsTableBody">
+                                <!-- Populated dynamically:
+                                     2026-10-20 14:30 | App Redesign | Project Setup | Ahmed Raza | 5,000
+                                     2026-10-22 10:05 | Logo Refresh | Final Logo | Zara Malik | 12,000
+                                     2026-10-24 17:45 | Logo Refresh | Concept Sketches | Zara Malik | 8,000
+                                -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- T7: Empty State Box -->
+                    <div class="empty-state-dashed hidden" id="emptyStatePayments">
+                        <div class="empty-icon-wrap">
+                            <i class="ph ph-receipt-x"></i>
+                        </div>
+                        <p class="empty-text">[Empty state] No payments made yet.</p>
+                    </div>
+
+                    <!-- T8: Total Paid Summary Card -->
+                    <div class="payments-summary-card">
+                        <div class="summary-label">
+                            <i class="ph-bold ph-wallet"></i>
+                            <span>Total paid:</span>
+                        </div>
+                        <div class="summary-value" id="totalPaidDisplay">$25,000</div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- =========================================================================
+         4. CONFIRMATION & ACTION MODALS
+         ========================================================================= -->
+    <div class="modal-backdrop hidden" id="actionModalBackdrop">
+        <div class="modal-card" id="actionModalCard">
+            <div class="modal-header">
+                <div class="modal-icon-wrap" id="modalIconWrap">
+                    <i class="ph-bold ph-currency-dollar"></i>
+                </div>
+                <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
+                <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <p id="modalMessage">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="modalConfirmBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         5. TOAST NOTIFICATION CONTAINER
+         ========================================================================= -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- Scripts -->
+    <script src="db.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
